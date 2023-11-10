@@ -1,0 +1,23 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/"></a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <!-- 'Home', Add a <a> tag with an attribute href to call the '/' API that navigates to home page if logged in, or login page if not -->
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <!-- 'My Courses', add a <a> tag with an attribute href to call the '/courses?taken=true' API that navigates to courses page, showing the courses the student has taken, if logged in, or login page if not -->
+        <a class="nav-link" href="/courses?taken=true">My Courses</a>
+      </li>
+      <li class="nav-item">
+        <!-- 'Courses', add a <a> tag with an attribute href to call the '/courses' API that navigates to courses page if logged in, or login page if not -->
+        <a class="nav-link" href="/courses">Courses</a>
+      </li>
+      <li class="nav-item">
+        <!-- 'Log out', add a <a> tag with an attribute href to call the '/logout' API that navigates to the logout page -->
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</header>
