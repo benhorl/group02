@@ -259,5 +259,9 @@ app.get("/logout", (req, res) => {
   res.render("pages/logout");
 });
 
-app.listen(3000);
+app.get('/welcome', (req, res) => {
+  res.json({status: 'success', message: 'Welcome!'});
+});
+
+module.exports = app.listen(3000);
 console.log("Server is listening on port 3000");
