@@ -1,0 +1,26 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <div class="container">
+    <h1>Discover Events</h1>
+
+    <div class="row">
+      <% events.forEach(event => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="<%= event.images[0].url || 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29uY2VydHxlbnwwfHwwfHx8MA%3D%3D' %>" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+              <h5 class="card-title"><%= event.name %></h5>
+              <p class="card-text">Date and Time: <%= event.dates.start.dateTime %></p>
+              <a href="<%= event.url %>" class="btn btn-primary">Book Now</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>
+
