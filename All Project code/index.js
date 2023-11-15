@@ -165,6 +165,33 @@ app.get("/courses", (req, res) => {
     });
 });
 
+app.post("/posts/add", (req, res) => {
+  const { postTitle, postContent } = req.body;
+  
+  db.none('INSERT INTO posts(title, content) VALUES($1, $2)', [postTitle, postContent])
+    .then(() => {
+      res.redirect('/posts');
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send('An error occurred');
+    });
+});
+
+app.post("/posts/delete/:id", (req, res) => {
+  const postId = req.params.id;
+
+  db.none('DELETE FROM posts WHERE id = $1', [postId])
+    .then(() => {
+      res.redirect('/posts');
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send('An error occurred');
+    });
+});
+
+
 app.post("/courses/add", (req, res) => {
   const course_id = parseInt(req.body.course_id);
   db.tx(async (t) => {
