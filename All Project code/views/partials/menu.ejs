@@ -1,23 +1,37 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/"></a>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <!-- 'Home', Add a <a> tag with an attribute href to call the '/' API that navigates to home page if logged in, or login page if not -->
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <!-- 'My Courses', add a <a> tag with an attribute href to call the '/courses?taken=true' API that navigates to courses page, showing the courses the student has taken, if logged in, or login page if not -->
-        <a class="nav-link" href="/courses?taken=true">My Courses</a>
-      </li>
-      <li class="nav-item">
-        <!-- 'Courses', add a <a> tag with an attribute href to call the '/courses' API that navigates to courses page if logged in, or login page if not -->
-        <a class="nav-link" href="/courses">Courses</a>
-      </li>
-      <li class="nav-item">
-        <!-- 'Log out', add a <a> tag with an attribute href to call the '/logout' API that navigates to the logout page -->
-        <a class="nav-link" href="/logout">Logout</a>
-      </li>
-    </ul>
+  <nav class="navbar navbar-expand-sm border-bottom">
+    <div class="container">
+      <button
+        class="navbar-toggler ms-auto"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbar-collapse"
+        aria-controls="navbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/discover">Discover</a>
+          </li>
+        </ul>
+        
+        <% if (user) { %>
+          <!-- User is logged in, show Logout link -->
+          <div class="nav-item me-1">
+            <a class="nav-link" href="/logout">Logout</a>
+          </div>
+        <% } else { %>
+          <!-- User is not logged in, show Login link -->
+          <div class="nav-item me-1">
+            <a class="nav-link" href="/login">Login</a>
+          </div>
+        <% } %>
+      </div>
+    </div>
   </nav>
 </header>
+
+

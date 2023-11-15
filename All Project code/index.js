@@ -1,41 +1,55 @@
-const express = require("express");
-const app = express();
-const pgp = require("pg-promise")();
-const bodyParser = require("body-parser");
-const session = require("express-session");
+// *****************************************************
+// <!-- Section 1 : Import Dependencies -->
+// *****************************************************
 
-// db config
+const express = require('express'); // To build an application server or API
+const path = require('path');
+const app = express();
+const pgp = require('pg-promise')(); // To connect to the Postgres DB from the node server
+const bodyParser = require('body-parser');
+const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
+const bcrypt = require('bcrypt'); //  To hash passwords
+const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
+
+// *****************************************************
+// <!-- Section 2 : Connect to DB -->
+// *****************************************************
+
+// database configuration
 const dbConfig = {
-  host: "db",
-  port: 5432,
-  database: process.env.POSTGRES_DB,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
+  host: 'db', // the database server
+  port: 5432, // the database port
+  database: process.env.POSTGRES_DB, // the database name
+  user: process.env.POSTGRES_USER, // the user account to connect with
+  password: process.env.POSTGRES_PASSWORD, // the password of the user account
 };
 
 const db = pgp(dbConfig);
 
-// db test
+// test your database
 db.connect()
-  .then((obj) => {
-    // Can check the server version here (pg-promise v10.1.0+):
-    console.log("Database connection successful");
+  .then(obj => {
+    console.log('Database connection successful'); // you can view this message in the docker compose logs
     obj.done(); // success, release the connection;
   })
-  .catch((error) => {
-    console.log("ERROR:", error.message || error);
+  .catch(error => {
+    console.log('ERROR:', error.message || error);
   });
 
-// set the view engine to ejs
-app.set("view engine", "ejs");
-app.use(bodyParser.json());
+// *****************************************************
+// <!-- Section 3 : App Settings -->
+// *****************************************************
 
-// set session
+app.set('view engine', 'ejs'); // set the view engine to EJS
+
+app.use(bodyParser.json()); // specify the usage of JSON for parsing request body.
+
+// initialize session variables
 app.use(
   session({
-    secret: "XASDASDA",
-    saveUninitialized: true,
-    resave: true,
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
   })
 );
 
@@ -45,105 +59,106 @@ app.use(
   })
 );
 
-const user = {
-  student_id: undefined,
-  username: undefined,
-  first_name: undefined,
-  last_name: undefined,
-  email: undefined,
-  year: undefined,
-  major: undefined,
-  degree: undefined,
-};
+app.use(express.static(path.join(__dirname, 'views', 'static')));
 
-const student_courses = `
-  SELECT DISTINCT
-    courses.course_id,
-    courses.course_name,
-    courses.credit_hours,
-    students.student_id = $1 AS "taken"
-  FROM
-    courses
-    JOIN student_courses ON courses.course_id = student_courses.course_id
-    JOIN students ON student_courses.student_id = students.student_id
-  WHERE students.student_id = $1
-  ORDER BY courses.course_id ASC;`;
+// *****************************************************
+// <!-- Section 4 : API Routes -->
+// *****************************************************
 
-const all_courses = `
-  SELECT
-    courses.course_id,
-    courses.course_name,
-    courses.credit_hours,
-    CASE
-    WHEN
-    courses.course_id IN (
-      SELECT student_courses.course_id
-      FROM student_courses
-      WHERE student_courses.student_id = $1
-    ) THEN TRUE
-    ELSE FALSE
-    END
-    AS "taken"
-  FROM
-    courses
-  ORDER BY courses.course_id ASC;
-  `;
-
-app.get("/login", (req, res) => {
-  res.render("pages/login");
-});
-
-// Login submission
-app.post("/login", (req, res) => {
-  const email = req.body.email;
-  const username = req.body.username;
-  const query = "select * from students where students.email = $1";
-  const values = [email];
-
-  // get the student_id based on the emailid
-  db.one(query, values)
-    .then((data) => {
-      user.student_id = data.student_id;
-      user.username = username;
-      user.first_name = data.first_name;
-      user.last_name = data.last_name;
-      user.email = data.email;
-      user.year = data.year;
-      user.major = data.major;
-      user.degree = data.degree;
-
-      req.session.user = user;
-      req.session.save();
-
-      res.redirect("/");
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect("/login");
-    });
-});
-
-// Authentication middleware.
+// Authentication Middleware.
 const auth = (req, res, next) => {
   if (!req.session.user) {
-    return res.redirect("/login");
+    // Default to login page.
+    return res.redirect('/login');
   }
   next();
 };
 
-app.use(auth);
+app.get('/', (req, res) => {
+  res.redirect('/login');
+});
 
-app.get("/", (req, res) => {
-  res.render("pages/home", {
-    username: req.session.user.username,
-    first_name: req.session.user.first_name,
-    last_name: req.session.user.last_name,
-    email: req.session.user.email,
-    year: req.session.user.year,
-    major: req.session.user.major,
-    degree: req.session.user.degree,
+app.get('/login', (req, res) => {
+  res.render('pages/login', { user: req.session.user });
+});
+
+app.get('/register', (req, res) => {
+  res.render('pages/register', { user: req.session.user });
+});
+
+app.post('/register', async (req, res) => {
+  // Hash the password using bcrypt library
+  const hash = await bcrypt.hash(req.body.password, 10);
+
+  const query = 'INSERT INTO users (username, password) VALUES ($1, $2)';
+  const values = [req.body.username.toLowerCase(), hash]; //makes sure usernames cannot be repeated
+
+  db.none(query, values)
+    .then(() => {
+      console.log('User registered successfully');
+      res.redirect('/login');
+    })
+    .catch((error) => {
+      console.error('Error registering user:', error);
+      res.redirect('/register');
+    });
+});
+
+
+
+app.post('/login', async (req, res, next) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await db.oneOrNone('SELECT * FROM users WHERE username = $1', [username]);
+
+    if (user) {
+      const match = await bcrypt.compare(password, user.password);
+
+      if (match) {
+
+        req.session.user = user;
+        req.session.save();
+
+        res.redirect('/discover');
+      } else {
+        res.status(401).send('Incorrect username or password.');
+      }
+    } else {
+      res.redirect('/register');
+    }
+  } catch (error) {
+    console.error('Database query error:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+app.get('/discover', (req, res) => {
+  // Make an Axios call to the Ticketmaster API
+  axios({
+    url: 'https://app.ticketmaster.com/discovery/v2/events.json',
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+      apikey: "", // Replace with your API_KEY
+      keyword: 'Travis Scott',
+      size: 10, // You can choose the number of events you want to return
+    },
+  })
+  .then((results) => {
+    res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
+  })
+  .catch((error) => {
+    console.error('API Error:', error);
+    res.render('pages/discover', { events: [], user: req.session.user });
   });
 });
+
 
 app.get("/courses", (req, res) => {
   const taken = req.query.taken;
@@ -250,41 +265,26 @@ app.post("/courses/add", (req, res) => {
     });
 });
 
-app.post("/courses/delete", (req, res) => {
-  db.task("delete-course", (task) => {
-    return task.batch([
-      task.none(
-        `DELETE FROM
-            student_courses
-          WHERE
-            student_id = $1
-            AND course_id = '$2';`,
-        [req.session.user.student_id, parseInt(req.body.course_id)]
-      ),
-      task.any(student_courses, [req.session.user.student_id]),
-    ]);
-  })
-    .then(([, courses]) => {
-      console.info(courses);
-      res.render("pages/courses", {
-        courses,
-        message: `Successfully removed course ${req.body.course_id}`,
-        action: "delete",
-      });
-    })
-    .catch((err) => {
-      res.render("pages/courses", {
-        courses: [],
-        error: true,
-        message: err.message,
-      });
-    });
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+    } else {
+      console.log('User logged out successfully');
+    }
+    res.render('pages/login', { user: undefined, message: 'Logged out Successfully' }); //logs out user
+  });
 });
 
-app.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.render("pages/logout");
-});
 
+
+// Authentication Required
+app.use(auth);
+
+
+// *****************************************************
+// <!-- Section 5 : Start Server-->
+// *****************************************************
+// starting the server and keeping the connection open to listen for more requests
 app.listen(3000);
-console.log("Server is listening on port 3000");
+console.log('Server is listening on port 3000');
