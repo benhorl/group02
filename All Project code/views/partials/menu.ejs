@@ -1,6 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-sm border-bottom">
     <div class="container">
+      <a class="navbar-brand" href="#">Restaurant Reviews</a>
       <button
         class="navbar-toggler ms-auto"
         type="button"
@@ -14,17 +15,22 @@
       <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/discover">Discover</a>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
+            </li>
+            <a class="nav-link active " aria-current="page" href="/discover">Discover</a>
+            
           </li>
         </ul>
-        
+         
         <% if (user) { %>
-          <!-- User is logged in, show Logout link -->
+         
           <div class="nav-item me-1">
             <a class="nav-link" href="/logout">Logout</a>
           </div>
+          
         <% } else { %>
-          <!-- User is not logged in, show Login link -->
+          
           <div class="nav-item me-1">
             <a class="nav-link" href="/login">Login</a>
           </div>
