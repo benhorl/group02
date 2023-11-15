@@ -276,6 +276,29 @@ app.get('/logout', (req, res) => {
   });
 });
 
+app.get('/home', (req, res) => {
+  // Make an Axios call to the Ticketmaster API
+  axios({
+    url: 'https://app.ticketmaster.com/discovery/v2/events.json',
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+      apikey: "", // Replace with your API_KEY
+      keyword: 'Travis Scott',
+      size: 10, // You can choose the number of events you want to return
+    },
+  })
+  .then((results) => {
+    res.render('pages/home', { events: results.data._embedded.events, user: req.session.user });
+  })
+  .catch((error) => {
+    console.error('API Error:', error);
+    res.render('pages/home', { events: [], user: req.session.user });
+  });
+});
 
 
 // Authentication Required
