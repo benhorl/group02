@@ -193,6 +193,11 @@ app.post("/posts/add", (req, res) => {
     });
 });
 
+
+app.get('/posts/new', (req, res) => {
+  res.render('pages/new-post', { user: req.session.user });
+});
+
 app.post("/posts/delete/:id", (req, res) => {
   const postId = req.params.id;
 
