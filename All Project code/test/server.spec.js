@@ -23,6 +23,53 @@ describe('Server!', () => {
       });
   });
 
+  it('positive : /register', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({username: 'levi', password: 'hello'})
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        // expect(res.body.message).to.equals('Success');
+        done();
+      });
+  });
+
+  // it('negative : /register', done => {
+  //   chai
+  //     .request(server)
+  //     .post('/register')
+  //     .send({username: 'levi', password: 'hello'})
+  //     .end((err, res) => {
+  //       expect(res).to.have.status(200);
+  //       // expect(res.body.message).to.equals('Success');
+  //       done();
+  //     });
+  // });
+
+  it('positive : /login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({username: 'levi', password: 'hello'})
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        // expect(res.body.message).to.equals('Success');
+        done();
+      });
+  });
+
+  it('negative : /login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({username: 'levi', password: 'hell'})
+      .end((err, res) => {
+        expect(res).to.have.status(401);
+        // expect(res.body.message).to.equals('Success');
+        done();
+      });
+  });
   // ===========================================================================
   // TO-DO: Part A Login unit test case
 });

@@ -150,13 +150,13 @@ app.get('/discover', (req, res) => {
       size: 10, // You can choose the number of events you want to return
     },
   })
-  .then((results) => {
-    res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
-  })
-  .catch((error) => {
-    console.error('API Error:', error);
-    res.render('pages/discover', { events: [], user: req.session.user });
-  });
+    .then((results) => {
+      res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
+    })
+    .catch((error) => {
+      console.error('API Error:', error);
+      res.render('pages/discover', { events: [], user: req.session.user });
+    });
 });
 
 
@@ -182,7 +182,7 @@ app.get("/courses", (req, res) => {
 
 app.post("/posts/add", (req, res) => {
   const { postTitle, postContent } = req.body;
-  
+
   db.none('INSERT INTO posts(title, content) VALUES($1, $2)', [postTitle, postContent])
     .then(() => {
       res.redirect('/posts');
@@ -291,13 +291,18 @@ app.get('/home', (req, res) => {
       size: 10, // You can choose the number of events you want to return
     },
   })
-  .then((results) => {
-    res.render('pages/home', { events: results.data._embedded.events, user: req.session.user });
-  })
-  .catch((error) => {
-    console.error('API Error:', error);
-    res.render('pages/home', { events: [], user: req.session.user });
-  });
+    .then((results) => {
+      res.render('pages/home', { events: results.data._embedded.events, user: req.session.user });
+    })
+    .catch((error) => {
+      console.error('API Error:', error);
+      res.render('pages/home', { events: [], user: req.session.user });
+    });
+});
+
+//Welcome Test for Lab 11
+app.get('/welcome', (req, res) => {
+  res.json({ status: 'success', message: 'Welcome!' });
 });
 
 
@@ -309,5 +314,5 @@ app.use(auth);
 // <!-- Section 5 : Start Server-->
 // *****************************************************
 // starting the server and keeping the connection open to listen for more requests
-app.listen(3000);
+module.exports = app.listen(3000);
 console.log('Server is listening on port 3000');
