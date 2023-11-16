@@ -1,0 +1,7 @@
+11/16/23 TA Meeting Notes
+Login or account registration done, homepage done, database for users done, preliminary work started for other pages. Menu to create a page is aesthetically functional, but doesn’t have support yet. 
+[Demonstration of working website elements]
+Work on API has not yet begun, discussed backup plan – Create presets to manually load into the database on docker load. 
+Instructed to figure out if the Yelp API works ASAP, and if not, check alternatives or use backup plan. 
+Suggestion of more features to add to further flesh out the project and differentiate it from existing websites like Yelp. 
+Profile page – Wishlist, credited reviews, view other profiles.
