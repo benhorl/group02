@@ -143,57 +143,17 @@ app.post('/login', async (req, res, next) => {
     }
 });
 
+/* WORKING API CALL SEE DOCS FOR MORE INTO
+sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
+sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20' })
+    .then(({ data }) => console.log(data))
+    .catch(err => console.error(err));
+    */
+
 
 
 app.get('/discover', async (req, res) => {
-    // Make an Axios call to the Ticketmaster API
     res.render('pages/home', { events: [], user: req.session.user });
-
-    sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
-    sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20' })
-        .then(({ data }) => console.log(data))
-        .catch(err => console.error(err));
-
-    // await axios({
-    //     url: 'https://api.yelp.com/v3/businesses/search',
-    //     method: 'GET', 
-    //     dataType: 'json',
-    //     headers: {
-    //         'Accept-Encoding': 'application/json',
-    //     },
-    //     params: {
-    //         apikey: 'BEARER cPP8rGv7wCGvlhpsK2W5lVk47kzV8mH0XpoYAXM0NEm5NZWytyt_CRoitk-OpSoUtnWphbi2W3Qlo9l522AJ0vqO6SSa61hrXYNL_Zag5jD7bcjnk30EX4U0OaZXZXYx',
-    //         location: "Boulder",
-    //     }
-    // })
-    // .then((results) => {
-    //         console.log(results.data);
-    //             res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
-    //         })
-    //         .catch((error) => {
-    //             console.error('API Error:', error);
-    //             res.render('pages/discover', { events: [], user: req.session.user });
-    //         });
-    // axios({
-    //     url: 'https://app.ticketmaster.com/discovery/v2/events.json',
-    //     method: 'GET',
-    //     dataType: 'json',
-    //     headers: {
-    //         'Accept-Encoding': 'application/json',
-    //     },
-    //     params: {
-    //         apikey: "", // Replace with your API_KEY
-    //         keyword: 'Travis Scott',
-    //         size: 10, // You can choose the number of events you want to return
-    //     },
-    // })
-    //     .then((results) => {
-    //         res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
-    //     })
-    //     .catch((error) => {
-    //         console.error('API Error:', error);
-    //         res.render('pages/discover', { events: [], user: req.session.user });
-    //     });
 });
 
 app.post("/posts/add", (req, res) => {
