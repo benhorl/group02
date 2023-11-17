@@ -146,47 +146,27 @@ app.post('/login', async (req, res, next) => {
 
 app.get('/discover', (req, res) => {
     // Make an Axios call to the Ticketmaster API
-    axios({
-        url: 'https://app.ticketmaster.com/discovery/v2/events.json',
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            'Accept-Encoding': 'application/json',
-        },
-        params: {
-            apikey: "", // Replace with your API_KEY
-            keyword: 'Travis Scott',
-            size: 10, // You can choose the number of events you want to return
-        },
-    })
-        .then((results) => {
-            res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
-        })
-        .catch((error) => {
-            console.error('API Error:', error);
-            res.render('pages/discover', { events: [], user: req.session.user });
-        });
-});
-
-
-app.get("/courses", (req, res) => {
-    const taken = req.query.taken;
-    // Query to list all the courses taken by a student
-
-    db.any(taken ? student_courses : all_courses, [req.session.user.student_id])
-        .then((courses) => {
-            res.render("pages/courses", {
-                courses,
-                action: req.query.taken ? "delete" : "add",
-            });
-        })
-        .catch((err) => {
-            res.render("pages/courses", {
-                courses: [],
-                error: true,
-                message: err.message,
-            });
-        });
+    res.render('pages/home', { events: [], user: req.session.user });
+    // axios({
+    //     url: 'https://app.ticketmaster.com/discovery/v2/events.json',
+    //     method: 'GET',
+    //     dataType: 'json',
+    //     headers: {
+    //         'Accept-Encoding': 'application/json',
+    //     },
+    //     params: {
+    //         apikey: "", // Replace with your API_KEY
+    //         keyword: 'Travis Scott',
+    //         size: 10, // You can choose the number of events you want to return
+    //     },
+    // })
+    //     .then((results) => {
+    //         res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
+    //     })
+    //     .catch((error) => {
+    //         console.error('API Error:', error);
+    //         res.render('pages/discover', { events: [], user: req.session.user });
+    //     });
 });
 
 app.post("/posts/add", (req, res) => {
@@ -220,65 +200,6 @@ app.post("/posts/delete/:id", (req, res) => {
         });
 });
 
-
-app.post("/courses/add", (req, res) => {
-    const course_id = parseInt(req.body.course_id);
-    db.tx(async (t) => {
-        // This transaction will continue iff the student has satisfied all the
-        // required prerequisites.
-        const { num_prerequisites } = await t.one(
-            `SELECT
-        num_prerequisites
-       FROM
-        course_prerequisite_count
-       WHERE
-        course_id = $1`,
-            [course_id]
-        );
-
-        if (num_prerequisites > 0) {
-            // This returns [] if the student has not taken any prerequisites for
-            // the course.
-            const [row] = await t.any(
-                `SELECT
-              num_prerequisites_satisfied
-            FROM
-              student_prerequisite_count
-            WHERE
-              course_id = $1
-              AND student_id = $2`,
-                [course_id, req.session.user.student_id]
-            );
-
-            if (!row || row.num_prerequisites_satisfied < num_prerequisites) {
-                throw new Error(`Prerequisites not satisfied for course ${course_id}`);
-            }
-        }
-
-        // There are either no prerequisites, or all have been taken.
-        await t.none(
-            "INSERT INTO student_courses(course_id, student_id) VALUES ($1, $2);",
-            [course_id, req.session.user.student_id]
-        );
-        return t.any(all_courses, [req.session.user.student_id]);
-    })
-        .then((courses) => {
-            //console.info(courses);
-            res.render("pages/courses", {
-                courses,
-                message: `Successfully added course ${req.body.course_id}`,
-                action: "add",
-            });
-        })
-        .catch((err) => {
-            res.render("pages/courses", {
-                courses: [],
-                error: true,
-                message: err.message,
-            });
-        });
-});
-
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -286,32 +207,33 @@ app.get('/logout', (req, res) => {
         } else {
             console.log('User logged out successfully');
         }
-        res.render('pages/login', { user: undefined, message: 'Logged out Successfully', error: ''}); //logs out user
+        res.render('pages/login', { user: undefined, message: 'Logged out Successfully', error: '' }); //logs out user
     });
 });
 
 app.get('/home', (req, res) => {
     // Make an Axios call to the Ticketmaster API
-    axios({
-        url: 'https://app.ticketmaster.com/discovery/v2/events.json',
-        method: 'GET',
-        dataType: 'json',
-        headers: {
-            'Accept-Encoding': 'application/json',
-        },
-        params: {
-            apikey: "", // Replace with your API_KEY
-            keyword: 'Travis Scott',
-            size: 10, // You can choose the number of events you want to return
-        },
-    })
-        .then((results) => {
-            res.render('pages/home', { events: results.data._embedded.events, user: req.session.user });
-        })
-        .catch((error) => {
-            console.error('API Error:', error);
-            res.render('pages/home', { events: [], user: req.session.user });
-        });
+    res.render('pages/home', { events: [], user: req.session.user });
+    // axios({
+    //     url: 'https://app.ticketmaster.com/discovery/v2/events.json',
+    //     method: 'GET',
+    //     dataType: 'json',
+    //     headers: {
+    //         'Accept-Encoding': 'application/json',
+    //     },
+    //     params: {
+    //         apikey: "", // Replace with your API_KEY
+    //         keyword: 'Travis Scott',
+    //         size: 10, // You can choose the number of events you want to return
+    //     },
+    // })
+    //     .then((results) => {
+    //         res.render('pages/home', { events: results.data._embedded.events, user: req.session.user });
+    //     })
+    //     .catch((error) => {
+    //         console.error('API Error:', error);
+    //         res.render('pages/home', { events: [], user: req.session.user });
+    //     });
 });
 
 //Welcome Test for Lab 11

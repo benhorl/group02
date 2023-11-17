@@ -28,33 +28,36 @@ describe('Server!', () => {
       .request(server)
       .post('/register')
       .send({username: 'levi', password: 'hello'})
+      .redirects(0) //tests if the correct registration attempt correctly passes to the login page
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        // expect(res.body.message).to.equals('Success');
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/login') 
         done();
       });
   });
 
-  // it('negative : /register', done => {
-  //   chai
-  //     .request(server)
-  //     .post('/register')
-  //     .send({username: 'levi', password: 'hello'})
-  //     .end((err, res) => {
-  //       expect(res).to.have.status(200);
-  //       // expect(res.body.message).to.equals('Success');
-  //       done();
-  //     });
-  // });
+  it('negative : /register', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({username: 'levi', password: 'hello'})
+      .redirects(0) //tests if the incorrect registration attempt correctly sends the user to reattempt registration
+      .end((err, res) => {
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/register')
+        done();
+      });
+  });
 
   it('positive : /login', done => {
     chai
       .request(server)
       .post('/login')
       .send({username: 'levi', password: 'hello'})
+      .redirects(0) //tests if the correct login attempt correctly passes into the rest of the website
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        // expect(res.body.message).to.equals('Success');
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/discover')
         done();
       });
   });
@@ -64,9 +67,10 @@ describe('Server!', () => {
       .request(server)
       .post('/login')
       .send({username: 'levi', password: 'hell'})
+      .redirects(0) //tests if the incorrect login attempt correctly redirects the user to reattempt login
       .end((err, res) => {
-        //expect(res).to.have.(401); returning a 401 makes things bad pls find a different way to check
-        // expect(res.body.message).to.equals('Success');
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/login')
         done();
       });
   });
