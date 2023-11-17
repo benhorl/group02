@@ -112,7 +112,7 @@ app.post('/register', async (req, res) => {
 
 
 app.post('/login', async (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body; 
 
     try {
         const user = await db.oneOrNone('SELECT * FROM users WHERE username = $1', [username]);
@@ -153,11 +153,10 @@ sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20'
 app.get('/search', async (req, res) => {
     let resArr;
     sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
-    await sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '10' })
+    await sdk.v3_business_search({ location: 'Boulder', term: req._parsedOriginalUrl.query.slice(2), sort_by: 'best_match', limit: '10' })
         .then(results => {
-            app.locals.message = '';
             resArr = results.data.businesses;
-            console.log(resArr);
+            //console.log(resArr);
             res.render('pages/search', { user: req.session.user, locals: resArr});
         })
         .catch(err => console.error(err));
