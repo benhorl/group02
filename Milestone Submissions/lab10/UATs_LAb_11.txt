@@ -1,0 +1,93 @@
+Feature 3: Write Review
+
+Test Cases:
+Review Submission:
+    User should be able to submit a review for a restaurant.
+    Test Data: Valid review content.
+    User Activity: Navigate to a restaurant page, enter review details, and submit.
+    Expected Result: Review is successfully submitted and displayed on the restaurant page.
+Character Limit:
+    Ensure there is a character limit for the review content.
+    Test Data: Exceed character limit in review content.
+    User Activity: Attempt to submit a review with content exceeding the character limit.
+    Expected Result: User receives an error indicating the character limit is exceeded.
+Test Data:
+    Valid review content: "The food was delicious! Highly recommended."
+    Exceeding character limit review content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+Test Environment:
+    Database: restraunt_db
+    Review table in the database stores restaurant reviews.
+Test Results:
+    Successful review submission should display the review on the restaurant page.
+Exceeding character limit should trigger an error message.
+User Acceptance Testers:
+Members of the development team and selected stakeholders.
+
+
+Feature 4: Profile Page
+
+Test Cases:
+
+Profile Information Display:
+
+    User should see their profile information on the profile page.
+    Test Data: Valid user credentials.
+    User Activity: Log in and navigate to the profile page.
+    Expected Result: User's profile information (name, email, etc.) is displayed accurately.
+Profile Edit:
+
+    User should be able to edit their profile information.
+    Test Data: Updated name and email.
+    User Activity: Navigate to the profile page, click on the edit button, update information, and save changes.
+    Expected Result: Edited information is saved and reflected on the profile page.
+Review History:
+
+    User should see a history of the reviews they have submitted.
+    Test Data: User with submitted reviews.
+    User Activity: Navigate to the profile page and check the review history section.
+    Expected Result: A list of reviews submitted by the user is displayed.
+Test Data:
+    Valid user credentials for testing profile information display and editing.
+    User with submitted reviews for testing review history.
+Test Environment:
+    Database: users_db
+    User and Review tables in the database store user and review information.
+Test Results:
+    Profile information should be accurately displayed and editable.
+    Review history should show a list of submitted reviews.
+User Acceptance Testers:
+    Members of the development team and selected stakeholders.
+
+Feature 5: Home Page
+
+Test Cases:
+Featured Restaurants Display:
+
+    User should see a selection of featured restaurants on the home page.
+    Test Data: Valid user credentials.
+    User Activity: Log in and navigate to the home page.
+    Expected Result: Featured restaurants are displayed prominently.
+Search Functionality:
+
+    User should be able to search for restaurants on the home page.
+    Test Data: Restaurant name for searching.
+    User Activity: Enter the restaurant name in the search bar and submit.
+    Expected Result: Search results display relevant restaurants.
+Navigation Links:
+
+    Ensure all navigation links on the home page are functional.
+    Test Data: Valid user credentials.
+    User Activity: Click on various navigation links (e.g., profile, write a review) from the home page.
+    Expected Result: User is successfully directed to the respective pages.
+Test Data:
+    Valid user credentials for testing featured restaurants and navigation links.
+    Restaurant name for testing search functionality.
+Test Environment:
+    Database: users_db
+    Restaurant and User tables in the database store restaurant and user information.
+Test Results:
+    Featured restaurants should be prominently displayed.
+    Search functionality should provide relevant results.
+    Navigation links should successfully direct the user to the respective pages.
+User Acceptance Testers:
+    Members of the development team and selected stakeholders.
