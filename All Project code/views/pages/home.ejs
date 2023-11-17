@@ -21,9 +21,9 @@
                 <%- include ('../partials/menu') %>
               </li>
             </ul>
-            <form class="d-flex" role="search" action="/search" method='GET'>
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light" type="submit">Search</button>
+            <form class="d-flex" action="/search" method="GET">
+              <input class="form-search" placeholder="Search" id="search" name="k">
+              <button type="submit" class="btn btn-outline-primary" id="searchButton">Search</button>
             </form>
           </div>
         </div>
