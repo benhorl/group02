@@ -1,82 +1,146 @@
 <%- include ('../partials/head') %>
 <%- include ('../partials/menu') %>
 
-        <main>
-            <div class="container">
-                <!-- THE REST OF YOUR HTML CODE GOES HERE -->
-                <h1>Discover</h1>
-                <div class="col"></div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <%= locals[0].name %>
-                            </td>
-                            <td> <img src=<%=locals[0].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[1].name %>
-                            </td>
-                            <td> <img src=<%=locals[1].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[2].name %>
-                            </td>
-                            <td> <img src=<%=locals[2].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[3].name %>
-                            </td>
-                            <td> <img src=<%=locals[3].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[4].name %>
-                            </td>
-                            <td> <img src=<%=locals[4].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[5].name %>
-                            </td>
-                            <td> <img src=<%=locals[5].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[6].name %>
-                            </td>
-                            <td> <img src=<%=locals[6].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[7].name %>
-                            </td>
-                            <td> <img src=<%=locals[7].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[8].name %>
-                            </td>
-                            <td> <img src=<%=locals[8].image_url %> width=150> </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <%= locals[9].name %>
-                            </td>
-                            <td> <img src=<%=locals[9].image_url %> width=150> </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
+<main>
+    <div class="container">
+    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+        <h1>Search Results</h1>
+        <div class="col"></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Reviews</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= locals[0].name %>
+                    </td>
+                    <td> 
+                        <img src=<%=locals[0].image_url %> width=150> 
+                    </td>
 
-        <%- include ('../partials/footer') %>
+                    <% let link0='/reviews/' + locals[0].alias %>
+
+                    <td> 
+                        <a href=<%=link0 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[0].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[1].name %>
+                    </td>
+                    <td> <img src=<%=locals[1].image_url %> width=150> </td>
+                    
+                    <% let link1='/reviews/' + locals[1].alias %>
+
+                    <td> <a href=<%=link1 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[1].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[2].name %>
+                    </td>
+                    <td> <img src=<%=locals[2].image_url %> width=150> </td>
+                    
+                    <% let link2='/reviews/' + locals[2].alias %>
+
+                    <td> <a href=<%=link2 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[2].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[3].name %>
+                    </td>
+                    <td> <img src=<%=locals[3].image_url %> width=150> </td>
+                    
+                    <% let link3='/reviews/' + locals[3].alias %>
+
+                    <td> <a href=<%=link3 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[3].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[4].name %>
+                    </td>
+                    <td> <img src=<%=locals[4].image_url %> width=150> </td>
+                    
+                    <% let link4='/reviews/' + locals[4].alias %>
+
+                    <td> <a href=<%=link4 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[4].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[5].name %>
+                    </td>
+                    <td> <img src=<%=locals[5].image_url %> width=150> </td>
+                    
+                    <% let link5='/reviews/' + locals[5].alias %>
+
+                    <td> <a href=<%=link5 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[5].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[6].name %>
+                    </td>
+                    <td> <img src=<%=locals[6].image_url %> width=150> </td>
+                    
+                    <% let link6='/reviews/' + locals[6].alias %>
+
+                    <td> <a href=<%=link6 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[6].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[7].name %>
+                    </td>
+                    <td> <img src=<%=locals[7].image_url %> width=150> </td>
+                    
+                    <% let link7='/reviews/' + locals[7].alias %>
+
+                    <td> <a href=<%=link7 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[7].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[8].name %>
+                    </td>
+                    <td> <img src=<%=locals[8].image_url %> width=150> </td>
+                    
+                    <% let link8='/reviews/' + locals[8].alias %>
+
+                    <td> <a href=<%=link8 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[8].name %></button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[9].name %>
+                    </td>
+                    <td> <img src=<%=locals[9].image_url %> width=150> </td>
+                    
+                    <% let link9='/reviews/' + locals[9].alias %>
+
+                    <td> <a href=<%=link9 %>> <button class="btn btn-info" 
+                            type="button">See Reviews for <%= locals[9].name %></button></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>

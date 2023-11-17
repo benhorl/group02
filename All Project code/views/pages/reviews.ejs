@@ -1,0 +1,56 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class="container">
+    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+        <h1>Reviews</h1>
+        <div class="col"></div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Review</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= locals[0].user.name %>
+                    </td>
+                    <td> 
+                       <%= locals[0].text %>
+                    </td>
+                    <td> 
+                        <%= locals[0].rating + ' ⭐' %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[1].user.name %>
+                    </td>
+                    <td> 
+                        <%= locals[1].text %>
+                    </td>
+                    <td> 
+                        <%= locals[1].rating + ' ⭐' %>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <%= locals[2].user.name %>
+                    </td>
+                    <td> 
+                        <%= locals[2].text %>
+                    </td>
+                    <td> 
+                        <%= locals[2].rating + ' ⭐' %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>

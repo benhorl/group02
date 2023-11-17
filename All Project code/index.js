@@ -11,6 +11,7 @@ const session = require('express-session'); // To set the session object. To sto
 const bcrypt = require('bcrypt'); //  To hash passwords
 //const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
 const sdk = require('api')('@yelp-developers/v1.0#xtskmqwlofwyovu');
+const sdkR = require('api')('@yelp-developers/v1.0#1a49qhalkmfd1mf');
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
@@ -112,7 +113,7 @@ app.post('/register', async (req, res) => {
 
 
 app.post('/login', async (req, res, next) => {
-    const { username, password } = req.body; 
+    const { username, password } = req.body;
 
     try {
         const user = await db.oneOrNone('SELECT * FROM users WHERE username = $1', [username]);
@@ -156,13 +157,22 @@ app.get('/search', async (req, res) => {
     await sdk.v3_business_search({ location: 'Boulder', term: req._parsedOriginalUrl.query.slice(2), sort_by: 'best_match', limit: '10' })
         .then(results => {
             resArr = results.data.businesses;
-            //console.log(resArr);
-            res.render('pages/search', { user: req.session.user, locals: resArr});
+            res.render('pages/search', { user: req.session.user, locals: resArr });
         })
         .catch(err => console.error(err));
 })
 
-
+app.get('/reviews/:id', (req, res) => {
+    let businessID = req.params.id;
+    sdkR.auth(process.env.API_KEY);
+    sdkR.v3_business_reviews({ limit: '5', sort_by: 'yelp_sort', business_id_or_alias: businessID })
+    .then(results => {
+        resArr = results.data.reviews;
+        console.log(resArr);
+        res.render('pages/reviews', { user: req.session.user, locals: resArr });
+    })
+        .catch(err => console.error(err));
+})
 
 
 app.get('/discover', async (req, res) => {
