@@ -1,6 +1,8 @@
 <%- include ('../partials/head') %>
 <!--<%- include ('../partials/menu') %>-->
-
+  <style>
+    p {color: #ffffff; text-shadow: -1px 1px 2px #000, 1px 2px 6px #000, 1px -1px 0 #000, -1px -1px 0 #000}
+  </style>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
@@ -29,13 +31,25 @@
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src= "../resources/img/aquarium_resturant.jpg" class="d-block w-100" width = "1500" height = "650">
+          <img src= "../resources/img/aquarium_resturant.jpg" class="d-block w-100" width = "1500" height = "700">
+          <div class="carousel-caption">
+            <h3>Write a Review!</h3>
+            <p>Share your experieces with others!</p>
+          </div>
         </div>
         <div class="carousel-item">
-          <img src="../resources/img/erlowestplate.jpg" class="d-block w-100" alt="Image 2" width = "1500" height = "650">
+          <img src="../resources/img/erlowestplate.jpg" class="d-block w-100" alt="Image 2" width = "1500" height = "700">
+          <div class="carousel-caption">
+            <h3>Search for your next resturant destination!</h3>
+            <p>Hungry? Check out what others have to say about your next resturant!</p>
+          </div>
         </div>
         <div class="carousel-item">
-          <img src="../resources/img/indianfood.jpg" class="d-block w-100" alt="Image 3" width = "1500" height = "650">
+          <img src="../resources/img/indianfood.jpg" class="d-block w-100" alt="Image 3" width = "1500" height = "700">
+          <div class="carousel-caption">
+            <h3>Looking for a specic type of resturant?</h3>
+            <p>We got it.</p>
+          </div>
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
