@@ -33,6 +33,19 @@ describe('Server!', () => {
     chai
       .request(server)
       .post('/register')
+      .send({username: '123', password: '123'})
+      .redirects(0) //tests if the correct registration attempt correctly passes to the login page
+      .end((err, res) => {
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/login') 
+        done();
+      });
+  });
+
+  it('positive : /register', done => {
+    chai
+      .request(server)
+      .post('/register')
       .send({username: 'levi', password: 'hello'})
       .redirects(0) //tests if the correct registration attempt correctly passes to the login page
       .end((err, res) => {

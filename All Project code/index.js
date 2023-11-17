@@ -149,7 +149,7 @@ app.get('/discover', async (req, res) => {
     // Make an Axios call to the Ticketmaster API
     res.render('pages/home', { events: [], user: req.session.user });
 
-    sdk.auth('BEARER cPP8rGv7wCGvlhpsK2W5lVk47kzV8mH0XpoYAXM0NEm5NZWytyt_CRoitk-OpSoUtnWphbi2W3Qlo9l522AJ0vqO6SSa61hrXYNL_Zag5jD7bcjnk30EX4U0OaZXZXYx');
+    sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
     sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20' })
         .then(({ data }) => console.log(data))
         .catch(err => console.error(err));
