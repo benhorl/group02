@@ -9,7 +9,7 @@ const pgp = require('pg-promise')(); // To connect to the Postgres DB from the n
 const bodyParser = require('body-parser');
 const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const bcrypt = require('bcrypt'); //  To hash passwords
-const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
+//const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
 const sdk = require('api')('@yelp-developers/v1.0#xtskmqwlofwyovu');
 
 // *****************************************************
@@ -150,6 +150,20 @@ sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20'
     .catch(err => console.error(err));
     */
 
+app.get('/search', async (req, res) => {
+    let resArr;
+    sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
+    await sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '10' })
+        .then(results => {
+            app.locals.message = '';
+            resArr = results.data.businesses;
+            console.log(resArr);
+            res.render('pages/search', { user: req.session.user, locals: resArr});
+        })
+        .catch(err => console.error(err));
+})
+
+
 
 
 app.get('/discover', async (req, res) => {
@@ -199,28 +213,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    // Make an Axios call to the Ticketmaster API
     res.render('pages/home', { events: [], user: req.session.user });
-    // axios({
-    //     url: 'https://app.ticketmaster.com/discovery/v2/events.json',
-    //     method: 'GET',
-    //     dataType: 'json',
-    //     headers: {
-    //         'Accept-Encoding': 'application/json',
-    //     },
-    //     params: {
-    //         apikey: "", // Replace with your API_KEY
-    //         keyword: 'Travis Scott',
-    //         size: 10, // You can choose the number of events you want to return
-    //     },
-    // })
-    //     .then((results) => {
-    //         res.render('pages/home', { events: results.data._embedded.events, user: req.session.user });
-    //     })
-    //     .catch((error) => {
-    //         console.error('API Error:', error);
-    //         res.render('pages/home', { events: [], user: req.session.user });
-    //     });
 });
 
 //Welcome Test for Lab 11

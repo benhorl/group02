@@ -1,5 +1,5 @@
 <%- include ('../partials/head') %>
-<!--<%- include ('../partials/menu') %>-->
+<%- include ('../partials/menu') %>
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -13,7 +13,7 @@
                 <%- include ('../partials/menu') %>
               </li>
             </ul>
-            <form class="d-flex" role="search">
+            <form class="d-flex" role="search" action="/search" method='GET'>
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
