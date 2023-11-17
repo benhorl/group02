@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const bcrypt = require('bcrypt'); //  To hash passwords
 const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
+const sdk = require('api')('@yelp-developers/v1.0#xtskmqwlofwyovu');
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
@@ -144,9 +145,35 @@ app.post('/login', async (req, res, next) => {
 
 
 
-app.get('/discover', (req, res) => {
+app.get('/discover', async (req, res) => {
     // Make an Axios call to the Ticketmaster API
     res.render('pages/home', { events: [], user: req.session.user });
+
+    sdk.auth('BEARER cPP8rGv7wCGvlhpsK2W5lVk47kzV8mH0XpoYAXM0NEm5NZWytyt_CRoitk-OpSoUtnWphbi2W3Qlo9l522AJ0vqO6SSa61hrXYNL_Zag5jD7bcjnk30EX4U0OaZXZXYx');
+    sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20' })
+        .then(({ data }) => console.log(data))
+        .catch(err => console.error(err));
+
+    // await axios({
+    //     url: 'https://api.yelp.com/v3/businesses/search',
+    //     method: 'GET', 
+    //     dataType: 'json',
+    //     headers: {
+    //         'Accept-Encoding': 'application/json',
+    //     },
+    //     params: {
+    //         apikey: 'BEARER cPP8rGv7wCGvlhpsK2W5lVk47kzV8mH0XpoYAXM0NEm5NZWytyt_CRoitk-OpSoUtnWphbi2W3Qlo9l522AJ0vqO6SSa61hrXYNL_Zag5jD7bcjnk30EX4U0OaZXZXYx',
+    //         location: "Boulder",
+    //     }
+    // })
+    // .then((results) => {
+    //         console.log(results.data);
+    //             res.render('pages/discover', { events: results.data._embedded.events, user: req.session.user });
+    //         })
+    //         .catch((error) => {
+    //             console.error('API Error:', error);
+    //             res.render('pages/discover', { events: [], user: req.session.user });
+    //         });
     // axios({
     //     url: 'https://app.ticketmaster.com/discovery/v2/events.json',
     //     method: 'GET',

@@ -9,6 +9,12 @@ chai.should();
 chai.use(chaiHttp);
 const {assert, expect} = chai;
 
+// chai
+//   .request(server)
+//   .get('/register')
+//   .send({username: '123', password: '123'})
+//   done();
+
 describe('Server!', () => {
   // Sample test case given to test / endpoint.
   it('Returns the default welcome message', done => {
