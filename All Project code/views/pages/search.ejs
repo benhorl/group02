@@ -1,0 +1,82 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/menu') %>
+
+        <main>
+            <div class="container">
+                <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+                <h1>Discover</h1>
+                <div class="col"></div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <%= locals[0].name %>
+                            </td>
+                            <td> <img src=<%=locals[0].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[1].name %>
+                            </td>
+                            <td> <img src=<%=locals[1].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[2].name %>
+                            </td>
+                            <td> <img src=<%=locals[2].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[3].name %>
+                            </td>
+                            <td> <img src=<%=locals[3].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[4].name %>
+                            </td>
+                            <td> <img src=<%=locals[4].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[5].name %>
+                            </td>
+                            <td> <img src=<%=locals[5].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[6].name %>
+                            </td>
+                            <td> <img src=<%=locals[6].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[7].name %>
+                            </td>
+                            <td> <img src=<%=locals[7].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[8].name %>
+                            </td>
+                            <td> <img src=<%=locals[8].image_url %> width=150> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= locals[9].name %>
+                            </td>
+                            <td> <img src=<%=locals[9].image_url %> width=150> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <%- include ('../partials/footer') %>
