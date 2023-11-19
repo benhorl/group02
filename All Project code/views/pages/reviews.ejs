@@ -6,6 +6,7 @@
     <!-- THE REST OF YOUR HTML CODE GOES HERE -->
         <h1>Reviews</h1>
         <div class="col"></div>
+        <a href="/posts/new" class="btn btn-success mb-4">Add New Review</a>
         <table class="table">
             <thead>
                 <tr>
@@ -15,6 +16,19 @@
                 </tr>
             </thead>
             <tbody>
+            <% for(let i = 0; i < events.length; i++){ %>
+                <tr>
+                    <td>
+                        <%= events[i].username %>
+                    </td>
+                    <td>
+                        <%= events[i].title  + ": " + events[i].content %>
+                    </td>
+                    <td>
+                        <%= events[i].rating + ' ⭐' %>
+                    </td>
+                </tr>
+            <% }; %>
                 <tr>
                     <td>
                         <%= locals[0].user.name %>

@@ -92,7 +92,17 @@ describe('Server!', () => {
         expect(res.headers.location).to.equal('/login')
         done();
       });
+    });
+
+  it('positive : /posts/add', done => {
+    chai
+      .request(server)
+      .post('/posts/add')
+      .send({user: 'Trip', postTitle: 'FANTASTIC', postContent: 'Great food and great location!', starRating: 4, businessID: 't-aco-an-urban-taqueria-boulder'})
+      done();
   });
+
+ 
   // ===========================================================================
   // TO-DO: Part A Login unit test case
 });

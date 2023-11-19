@@ -162,29 +162,35 @@ app.get('/search', async (req, res) => {
         .catch(err => console.error(err));
 })
 
-app.get('/reviews/:id', (req, res) => {
-    let businessID = req.params.id;
+let businessID
+app.get('/reviews/:id', async (req, res) => {
+    businessID = req.params.id;
     sdkR.auth(process.env.API_KEY);
     sdkR.v3_business_reviews({ limit: '5', sort_by: 'yelp_sort', business_id_or_alias: businessID })
-    .then(results => {
-        resArr = results.data.reviews;
-        console.log(resArr);
-        res.render('pages/reviews', { user: req.session.user, locals: resArr });
-    })
+        .then(results => {
+            resArr = results.data.reviews;
+            db.any(`SELECT * FROM posts WHERE alias = '${businessID}';`)
+                .then(data => {
+                    res.render('pages/reviews', { user: req.session.user, locals: resArr, events: data });
+                })
+
+            
+        })
         .catch(err => console.error(err));
 })
 
+app.get('/profile', async (req, res) => { })
 
 app.get('/discover', async (req, res) => {
     res.render('pages/home', { events: [], user: req.session.user });
 });
 
 app.post("/posts/add", (req, res) => {
-    const { postTitle, postContent } = req.body;
+    const { user, postTitle, postContent, starRating } = req.body;
 
-    db.none('INSERT INTO posts(title, content) VALUES($1, $2)', [postTitle, postContent])
+    db.none('INSERT INTO posts (username, title, content, rating, alias) VALUES($1, $2, $3, $4, $5)', [user, postTitle, postContent, starRating, businessID])
         .then(() => {
-            res.redirect('/posts');
+            res.redirect('/reviews/' + businessID);
         })
         .catch((error) => {
             console.error(error);
@@ -193,7 +199,7 @@ app.post("/posts/add", (req, res) => {
 });
 
 
-app.get('/posts/new', (req, res) => {
+app.get('/posts/new/', (req, res) => {
     res.render('pages/new-post', { user: req.session.user });
 });
 

@@ -29,6 +29,9 @@
               <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
             <a class="nav-link active " aria-current="page" href="/discover">Discover</a>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+            </li>
             
           </li>
         </ul>
@@ -36,7 +39,8 @@
         <% if (user) { %>
          
           <div class="nav-item me-1">
-            <a class="nav-link active" href="/logout">Logout</a>
+            <% let text = "Logout, " + user.username %>
+            <a class="nav-link active" href="/logout"> <%= text %> </a>
           </div>
           
         <% } else { %>
