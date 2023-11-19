@@ -1,0 +1,1 @@
+INSERT INTO posts (username, title, content, rating, alias) values ('Trip', 'Favorite Tacos', 'Excellent tacos and salsa', '5', 'mcdevitt-taco-supply-boulder');
