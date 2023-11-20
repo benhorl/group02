@@ -9,12 +9,6 @@ chai.should();
 chai.use(chaiHttp);
 const {assert, expect} = chai;
 
-// chai
-//   .request(server)
-//   .get('/register')
-//   .send({username: '123', password: '123'})
-//   done();
-
 describe('Server!', () => {
   // Sample test case given to test / endpoint.
   it('Returns the default welcome message', done => {
@@ -94,12 +88,17 @@ describe('Server!', () => {
       });
     });
 
-  it('positive : /posts/add', done => {
+  it('positive : /posts/add/:id', done => {
     chai
       .request(server)
       .post('/posts/add')
-      .send({user: 'Trip', postTitle: 'FANTASTIC', postContent: 'Great food and great location!', starRating: 4, businessID: 't-aco-an-urban-taqueria-boulder'})
-      done();
+      .send({user: 'Trip', postTitle: 'FANTASTIC', postContent: 'Great food and great location!', starRating: '4', alias: 't-aco-an-urban-taqueria-boulder'})
+      .redirects(0) 
+      .end((err, res) => {
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/reviews/t-aco-an-urban-taqueria-boulder')
+        done();
+      });
   });
 
  

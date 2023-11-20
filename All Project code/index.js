@@ -185,12 +185,12 @@ app.get('/discover', async (req, res) => {
     res.render('pages/home', { events: [], user: req.session.user });
 });
 
-app.post("/posts/add", (req, res) => {
-    const { user, postTitle, postContent, starRating } = req.body;
+app.post("/posts/add/", (req, res) => {
+    const { user, postTitle, postContent, starRating, alias } = req.body;
 
-    db.none('INSERT INTO posts (username, title, content, rating, alias) VALUES($1, $2, $3, $4, $5)', [user, postTitle, postContent, starRating, businessID])
+    db.none('INSERT INTO posts (username, title, content, rating, alias) VALUES($1, $2, $3, $4, $5)', [user, postTitle, postContent, starRating, alias])
         .then(() => {
-            res.redirect('/reviews/' + businessID);
+            res.redirect('/reviews/' + alias);
         })
         .catch((error) => {
             console.error(error);
@@ -200,7 +200,7 @@ app.post("/posts/add", (req, res) => {
 
 
 app.get('/posts/new/', (req, res) => {
-    res.render('pages/new-post', { user: req.session.user });
+    res.render('pages/new-post', { user: req.session.user, locals: businessID });
 });
 
 app.post("/posts/delete/:id", (req, res) => {
