@@ -179,7 +179,18 @@ app.get('/reviews/:id', async (req, res) => {
         .catch(err => console.error(err));
 })
 
-app.get('/profile', async (req, res) => { })
+app.get('/profile', async (req, res) => {
+    if (req.session.user) { //check if logged in
+        const user = req.session.user;
+
+        // Reviews for database
+        const reviews = await db.any('SELECT * FROM posts WHERE username = $1', [user.username]);
+
+        res.render('pages/profile', { user: req.session.user, reviews })
+    } else { //don't allow access if not logged in and redirect
+        res.redirect('/login');
+      }
+ });
 
 app.get('/discover', async (req, res) => {
     res.render('pages/home', { events: [], user: req.session.user });
@@ -197,7 +208,6 @@ app.post("/posts/add/", (req, res) => {
             res.send('An error occurred');
         });
 });
-
 
 app.get('/posts/new/', (req, res) => {
     res.render('pages/new-post', { user: req.session.user, locals: businessID });

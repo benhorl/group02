@@ -47,9 +47,15 @@
 
 body {
   background: rgb(106, 185, 203);
-  font-family: "Ariel", sans-serif;    
+  font-family: "Ariel", sans-serif;  
 }
 
 h4 {
   margin-bottom: 3%;
+}
+
+.profile-margin{
+  background-color: white;
+  margin-left: 5%;
+  margin-right: 5%;
 }

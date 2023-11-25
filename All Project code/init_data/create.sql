@@ -9,5 +9,6 @@ CREATE TABLE posts (
     title VARCHAR(200) NOT NULL,
     content VARCHAR,
     rating CHAR,
-    alias VARCHAR
+    alias VARCHAR,
+    FOREIGN KEY (username) REFERENCES users(username)
 );
