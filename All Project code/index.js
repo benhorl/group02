@@ -126,7 +126,7 @@ app.post('/login', async (req, res, next) => {
                 app.locals.message = '';
 
                 req.session.user = user;
-                req.session.user.location = "Boulder";
+                req.session.user.location = "";
                 req.session.save();
 
                 res.redirect('/home');
