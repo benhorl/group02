@@ -4,7 +4,7 @@
 <main>
     <div class="container">
     <!-- THE REST OF YOUR HTML CODE GOES HERE -->
-        <h1>Reviews</h1>
+        <h1>Reviews for <%= name %></h1>
         <div class="col"></div>
         <a href="/posts/new" class="btn btn-success mb-4">Add New Review</a>
         <table class="table">
@@ -16,50 +16,50 @@
                 </tr>
             </thead>
             <tbody>
-            <% for(let i = 0; i < events.length; i++){ %>
+            <% for(let i = 0; i < reviews.length; i++){ %>
                 <tr>
                     <td>
-                        <%= events[i].username %>
+                        <%= reviews[i].username %>
                     </td>
                     <td>
-                        <%= events[i].title  + ": " + events[i].content %>
+                        <%= reviews[i].title  + ": " + reviews[i].content %>
                     </td>
                     <td>
-                        <%= events[i].rating + ' ⭐' %>
+                        <%= reviews[i].rating + ' ⭐' %>
                     </td>
                 </tr>
             <% }; %>
                 <tr>
                     <td>
-                        <%= locals[0].user.name %>
+                        <%= yelp[0].user.name %>
                     </td>
                     <td> 
-                       <%= locals[0].text %>
+                       <%= yelp[0].text %>
                     </td>
                     <td> 
-                        <%= locals[0].rating + ' ⭐' %>
+                        <%= yelp[0].rating + ' ⭐' %>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <%= locals[1].user.name %>
+                        <%= yelp[1].user.name %>
                     </td>
                     <td> 
-                        <%= locals[1].text %>
+                        <%= yelp[1].text %>
                     </td>
                     <td> 
-                        <%= locals[1].rating + ' ⭐' %>
+                        <%= yelp[1].rating + ' ⭐' %>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <%= locals[2].user.name %>
+                        <%= yelp[2].user.name %>
                     </td>
                     <td> 
-                        <%= locals[2].text %>
+                        <%= yelp[2].text %>
                     </td>
                     <td> 
-                        <%= locals[2].rating + ' ⭐' %>
+                        <%= yelp[2].rating + ' ⭐' %>
                     </td>
                 </tr>
             </tbody>

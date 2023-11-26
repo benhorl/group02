@@ -70,7 +70,7 @@ describe('Server!', () => {
       .redirects(0) //tests if the correct login attempt correctly passes into the rest of the website
       .end((err, res) => {
         expect(res).to.have.status(302);
-        expect(res.headers.location).to.equal('/discover')
+        expect(res.headers.location).to.equal('/home')
         done();
       });
   });
