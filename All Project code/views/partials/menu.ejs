@@ -1,57 +1,56 @@
 <header>
-  <nav class="navbar navbar-expand-sm border-bottom">
+  <nav class="navbar navbar-expand-lg border-bottom ">
     <style>
       b {
-          color: #ffffff;
-          text-shadow: -1px 1px 2px #fffdfd, 1px 4px 10px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
+        color: #ffffff;
+        text-shadow: -1px 1px 2px #fffdfd, 1px 4px 10px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
       }
+
       a {
-          color: #ffffff;
-          text-shadow: -1px 1px 2px #fffdfd, 1px 1px 1px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
+        color: #ffffff;
+        text-shadow: -1px 1px 2px #fffdfd, 1px 1px 1px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
       }
-  </style>
-    <div class="container">
+    </style>
       <b class="navbar-brand" href="#">Restaurant Reviews</b>
-      <button
-        class="navbar-toggler ms-auto"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbar-collapse"
-        aria-controls="navbar"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse"
+        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar-collapse">
-        <ul class="navbar-nav me-auto">
+        <ul class="navbar-nav me-auto"> 
           <li class="nav-item">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/home">Home</a>
-            </li>
-            <a class="nav-link active " aria-current="page" href="/discover">Discover</a>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
-            </li>
-            
+            <a class="nav-link active" aria-current="page" href="/home">Home</a>
+          </li>
+          <!-- <a class="nav-link active " aria-current="page" href="/discover">Discover</a> -->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+          </li>
+
+
+          <li class="nav-item">
+            <% if (user) { %>
+
+              <div class="nav-item me-1">
+                <% let text="Logout, " + user.username %>
+                  <a class="nav-link active" href="/logout">
+                    <%= text %>
+                  </a>
+              </div>
+
+              <% } else { %>
+                <div class="nav-item me-1">
+                  <a class="nav-link active" href="/login">Login</a>
+                </div>
+                <% } %>
           </li>
         </ul>
-         
-        <% if (user) { %>
-         
-          <div class="nav-item me-1">
-            <% let text = "Logout, " + user.username %>
-            <a class="nav-link active" href="/logout"> <%= text %> </a>
-          </div>
-          
-        <% } else { %>
-          <div class="nav-item me-1">
-            <a class="nav-link active" href="/login">Login</a>
-          </div>
-        <% } %>
+        <form class="form-inline my-2 my-lg-0" action="/search" method="GET" id="search_bar">
+          <% console.log(locals.location) %>
+          <input class="form-search" placeholder="Location" id="location" name="k" value=<%= "Boulder" %> >
+          <input class="form-search" placeholder="Search" id="search" name="k">
+          <button type="submit" class="btn btn-outline-primary my-2 my-sm-0" id="searchButton">Search</button>
+        </form>
       </div>
     </div>
   </nav>
 </header>
-
-
-

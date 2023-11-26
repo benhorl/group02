@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt'); //  To hash passwords
 //const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part B.
 const sdk = require('api')('@yelp-developers/v1.0#xtskmqwlofwyovu');
 const sdkR = require('api')('@yelp-developers/v1.0#1a49qhalkmfd1mf');
+const prompts = require('prompts');
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
@@ -127,7 +128,7 @@ app.post('/login', async (req, res, next) => {
                 req.session.user = user;
                 req.session.save();
 
-                res.redirect('/discover');
+                res.redirect('/home');
             } else {
                 app.locals.message = 'Incorrect username or password';
                 app.locals.error = 'danger';
@@ -150,14 +151,21 @@ sdk.v3_business_search({ location: 'Boulder', sort_by: 'best_match', limit: '20'
     .then(({ data }) => console.log(data))
     .catch(err => console.error(err));
     */
-
+let restaurants = [];
 app.get('/search', async (req, res) => {
     let resArr;
+    let strArr = req._parsedOriginalUrl.query.split("&");
+    const place = strArr[0].slice(2);
+    const search = strArr[1].slice(2);
+
     sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
-    await sdk.v3_business_search({ location: 'Boulder', term: req._parsedOriginalUrl.query.slice(2), sort_by: 'best_match', limit: '10' })
+    await sdk.v3_business_search({ location: place, term: search, sort_by: 'best_match', limit: '10' })
         .then(results => {
             resArr = results.data.businesses;
-            res.render('pages/search', { user: req.session.user, locals: resArr });
+            for(let i = 0; i < resArr.length; i++){
+                restaurants[i] = resArr[i].name + "+" + resArr[i].alias;
+            }
+            res.render('pages/search', { user: req.session.user, search: resArr });
         })
         .catch(err => console.error(err));
 })
@@ -165,13 +173,20 @@ app.get('/search', async (req, res) => {
 let businessID
 app.get('/reviews/:id', async (req, res) => {
     businessID = req.params.id;
+    let str;
+    let msg;
+    for (let i = 0; i < restaurants.length; i++){
+        str = restaurants[i].split("+");
+        if(str[1] == businessID)
+            msg = str[0];
+    }
     sdkR.auth(process.env.API_KEY);
     sdkR.v3_business_reviews({ limit: '5', sort_by: 'yelp_sort', business_id_or_alias: businessID })
         .then(results => {
             resArr = results.data.reviews;
             db.any(`SELECT * FROM posts WHERE alias = '${businessID}';`)
                 .then(data => {
-                    res.render('pages/reviews', { user: req.session.user, locals: resArr, events: data });
+                    res.render('pages/reviews', { user: req.session.user, yelp: resArr, reviews: data, name: msg});
                 })
 
             
@@ -180,6 +195,7 @@ app.get('/reviews/:id', async (req, res) => {
 })
 
 app.get('/profile', async (req, res) => {
+    console.log(app.locals.events);
     if (req.session.user) { //check if logged in
         const user = req.session.user;
 
@@ -192,9 +208,9 @@ app.get('/profile', async (req, res) => {
       }
  });
 
-app.get('/discover', async (req, res) => {
-    res.render('pages/home', { events: [], user: req.session.user });
-});
+// app.get('/discover', async (req, res) => {
+//     res.render('pages/home', { events: [], user: req.session.user });
+// });
 
 app.post("/posts/add/", (req, res) => {
     const { user, postTitle, postContent, starRating, alias } = req.body;
@@ -210,7 +226,10 @@ app.post("/posts/add/", (req, res) => {
 });
 
 app.get('/posts/new/', (req, res) => {
-    res.render('pages/new-post', { user: req.session.user, locals: businessID });
+    if (req.session.user)
+        res.render('pages/new-post', { user: req.session.user, locals: businessID });
+    else
+        res.redirect('/login');
 });
 
 app.post("/posts/delete/:id", (req, res) => {
@@ -238,7 +257,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    res.render('pages/home', { events: [], user: req.session.user });
+    res.render('pages/home', {user: req.session.user });
 });
 
 //Welcome Test for Lab 11

@@ -1,29 +1,11 @@
 <%- include ('../partials/head') %>
+<%- include ('../partials/menu') %>
 
 <style>
   p {color: #ffffff; text-shadow: -1px 1px 2px #000, 1px 2px 6px #000, 1px -1px 0 #000, -1px -1px 0 #000}
 </style>
 
   <body>  
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <%- include ('../partials/menu') %>
-              </li>
-            </ul>
-            <form class="d-flex" action="/search" method="GET">
-              <input class="form-search" placeholder="Search" id="search" name="k">
-              <button type="submit" class="btn btn-outline-primary" id="searchButton">Search</button>
-            </form>
-          </div>
-        </div>
-    </nav>
-
     <div id="carouselIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -34,7 +16,7 @@
         <div class="carousel-item active">
           <img src= "../resources/img/aquarium_resturant.jpg" class="d-block w-100" width = "1500" height = "650">
           <div class="carousel-caption">
-            <h3>Looking for a specic type of resturant?</h3>
+            <h3>Looking for a specific type of resturant?</h3>
             <p>We got it.</p>
           </div>
  
@@ -49,7 +31,7 @@
         <div class="carousel-item">
           <img src="../resources/img/indianfood.jpg" class="d-block w-100" alt="Image 3" width = "1500" height = "650">
           <div class="carousel-caption">
-            <h3>Looking for a specic type of resturant?</h3>
+            <h3>Looking for a specific type of resturant?</h3>
             <p>We got it.</p>
           </div> 
         </div>
