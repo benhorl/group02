@@ -2,6 +2,7 @@
 <%- include ('../partials/menu') %>
 
 <main>
+    <script src="script.js"></script>
     <div class="container">
     <!-- THE REST OF YOUR HTML CODE GOES HERE -->
         <h1>Search Results</h1>
@@ -29,6 +30,14 @@
                         <a href=<%=link0 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[0].name %></button></a>
                     </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[0].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -40,6 +49,14 @@
 
                     <td> <a href=<%=link1 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[1].name %></button></a>
+                    </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[1].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
                     </td>
                 </tr>
                 <tr>
@@ -53,6 +70,14 @@
                     <td> <a href=<%=link2 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[2].name %></button></a>
                     </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[2].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -64,6 +89,14 @@
 
                     <td> <a href=<%=link3 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[3].name %></button></a>
+                    </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[3].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
                     </td>
                 </tr>
                 <tr>
@@ -77,6 +110,14 @@
                     <td> <a href=<%=link4 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[4].name %></button></a>
                     </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[4].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -88,6 +129,14 @@
 
                     <td> <a href=<%=link5 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[5].name %></button></a>
+                    </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[5].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
                     </td>
                 </tr>
                 <tr>
@@ -101,6 +150,14 @@
                     <td> <a href=<%=link6 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[6].name %></button></a>
                     </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[6].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -112,6 +169,14 @@
 
                     <td> <a href=<%=link7 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[7].name %></button></a>
+                    </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[7].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
                     </td>
                 </tr>
                 <tr>
@@ -125,6 +190,14 @@
                     <td> <a href=<%=link8 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[8].name %></button></a>
                     </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[8].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -136,6 +209,14 @@
 
                     <td> <a href=<%=link9 %>> <button class="btn btn-info" 
                             type="button">See Reviews for <%= search[9].name %></button></a>
+                    </td>
+                    <td>
+                        <% if (user) { %>
+                            <div class="toggle-button" onclick="toggleButton(event, '<%= user.username %>', '<%= locals[9].name %>')">
+                                <span class="iconPlus" id="iconPlus">+</span>
+                                <span class="iconCheck" id="iconCheck">&#10003;</span>
+                            </div>
+                        <% } %>                      
                     </td>
                 </tr>
             </tbody>

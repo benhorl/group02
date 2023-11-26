@@ -12,3 +12,10 @@ CREATE TABLE posts (
     alias VARCHAR,
     FOREIGN KEY (username) REFERENCES users(username)
 );
+
+CREATE TABLE wishlist (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50),
+    restaurant VARCHAR(100),
+    FOREIGN KEY (username) REFERENCES users(username)
+);

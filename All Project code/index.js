@@ -206,7 +206,9 @@ app.get('/profile', async (req, res) => {
         // Reviews for database
         const reviews = await db.any('SELECT * FROM posts WHERE username = $1', [user.username]);
 
-        res.render('pages/profile', { user: req.session.user, reviews })
+        const wishlist = await db.any('SELECT * FROM wishlist WHERE username = $1', [user.username]);
+
+        res.render('pages/profile', { user: req.session.user, reviews, wishlist })
     } else { //don't allow access if not logged in and redirect
         res.redirect('/login');
       }
@@ -248,6 +250,39 @@ app.post("/posts/delete/:id", (req, res) => {
             res.send('An error occurred');
         });
 });
+
+app.post('/wishlist/:username/:restaurant', async(req, res) => {
+    const { username, restaurant } = req.params;
+
+    const duplicate = await db.oneOrNone('SELECT * FROM wishlist WHERE username = $1 AND restaurant = $2', [username, restaurant]);
+
+    if (duplicate) {
+        // Restaurant is already in the wishlist, return an error response
+        return res.status(400).send('Restaurant already in the wishlist');
+    }
+    db.none('INSERT INTO wishlist(username, restaurant) VALUES($1, $2)', [username, restaurant])
+        .then(() => {
+            res.status(200).send('Added to wishlist successfully');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
+app.delete('/wishlist/:username/:restaurant', (req, res) => {
+    const { username, restaurant } = req.params;
+
+    db.none('DELETE FROM wishlist WHERE username = $1 AND restaurant = $2', [username, restaurant])
+        .then(() => {
+            res.status(200).send('Added to wishlist successfully');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
+        });
+});
+
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {

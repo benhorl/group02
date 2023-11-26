@@ -25,35 +25,27 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
           </li>
-
-
-          <li class="nav-item">
-            <% if (user) { %>
-
-              <div class="nav-item me-1">
-                <% let text="Logout, " + user.username %>
-                  <a class="nav-link active" href="/logout">
-                    <%= text %>
-                  </a>
-              </div>
-
-              <% } else { %>
-                <div class="nav-item me-1">
-                  <a class="nav-link active" href="/login">Login</a>
-                </div>
-                <% } %>
-          </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" action="/search" method="GET" id="search_bar">
-          <% console.log(user) %>
-          <% if (user) { %>
-          <input class="form-search" placeholder="Please set location" id="location" name="k" value=<%= user.location %> >
-          <% } else { %>
-            <input class="form-search" placeholder="Please set location" id="location" name="k">
-          <% }; %>
+        <form class="d-flex" action="/search" method="GET">
           <input class="form-search" placeholder="Search" id="search" name="k">
-          <button type="submit" class="btn btn-outline-primary my-2 my-sm-0" id="searchButton">Search</button>
+          <button type="submit" class="btn" id="searchButton" style="margin-right: 20px; margin-top: 0.5px; 
+          background-image: url(https://cdn-icons-png.flaticon.com/512/6438/6438882.png);
+          background-size: 27px 27px;
+          background-repeat: no-repeat;"></button>
         </form>
+         
+        <% if (user) { %>
+         
+          <div class="nav-item me-1">
+            <% let text = "Logout, " + user.username %>
+            <a class="nav-link active" href="/logout"> <%= text %> </a>
+          </div>
+          
+        <% } else { %>
+          <div class="nav-item me-1">
+            <a class="nav-link active" href="/login">Login</a>
+          </div>
+        <% } %>
       </div>
     </div>
   </nav>
