@@ -17,6 +17,15 @@
         <% } else { %>
             <p>You don't have any reviews yet.</p>
         <% } %>
+
+        <% if (wishlist && wishlist.length > 0) { %>
+            <p>Wishlist:</p>
+            <% wishlist.forEach(wish => { %>
+                <p><strong>Restaurant:</strong> <%= wish.restaurant %></p>
+            <% }) %>
+        <% } else { %> 
+            <p>Your wishlist is empty.</p>
+        <% } %>
     </div>
 </main>
 
