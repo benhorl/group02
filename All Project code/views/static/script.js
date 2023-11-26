@@ -1,7 +1,9 @@
-function toggleButton(event, username, restaurant) {
+function toggleButton(event, username) {
     const button = event.currentTarget;
     const iconPlus = button.querySelector('.iconPlus');
     const iconCheck = button.querySelector('.iconCheck');
+
+    const restaurant = button.getAttribute('restaurant-name');
 
     button.classList.toggle('checked');
     iconPlus.style.opacity = iconPlus.style.opacity === '0' ? '1' : '0';
