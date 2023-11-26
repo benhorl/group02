@@ -126,6 +126,7 @@ app.post('/login', async (req, res, next) => {
                 app.locals.message = '';
 
                 req.session.user = user;
+                req.session.user.location = "Boulder";
                 req.session.save();
 
                 res.redirect('/home');
@@ -157,6 +158,9 @@ app.get('/search', async (req, res) => {
     let strArr = req._parsedOriginalUrl.query.split("&");
     const place = strArr[0].slice(2);
     const search = strArr[1].slice(2);
+
+    req.session.user.location = place;
+    req.session.save();
 
     sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
     await sdk.v3_business_search({ location: place, term: search, sort_by: 'best_match', limit: '10' })

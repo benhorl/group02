@@ -45,8 +45,12 @@
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="/search" method="GET" id="search_bar">
-          <% console.log(locals.location) %>
-          <input class="form-search" placeholder="Location" id="location" name="k" value=<%= "Boulder" %> >
+          <% console.log(user) %>
+          <% if (user) { %>
+          <input class="form-search" placeholder="Location" id="location" name="k" value=<%= user.location %> >
+          <% } else { %>
+            <input class="form-search" placeholder="Location" id="location" name="k">
+          <% }; %>
           <input class="form-search" placeholder="Search" id="search" name="k">
           <button type="submit" class="btn btn-outline-primary my-2 my-sm-0" id="searchButton">Search</button>
         </form>
