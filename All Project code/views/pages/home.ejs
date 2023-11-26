@@ -1,4 +1,5 @@
 <%- include ('../partials/head') %>
+<%- include ('../partials/menu') %>
 
 <style>
   p {color: #ffffff; text-shadow: -1px 1px 2px #000, 1px 2px 6px #000, 1px -1px 0 #000, -1px -1px 0 #000}
@@ -13,13 +14,8 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <%- include ('../partials/menu') %>
               </li>
             </ul>
-            <form class="d-flex" action="/search" method="GET">
-              <input class="form-search" placeholder="Search" id="search" name="k">
-              <button type="submit" class="btn btn-outline-primary" id="searchButton">Search</button>
-            </form>
           </div>
         </div>
     </nav>
