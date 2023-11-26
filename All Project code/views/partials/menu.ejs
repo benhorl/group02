@@ -27,7 +27,7 @@
           </li>
         </ul>
         <form class="d-flex" action="/search" method="GET">
-          <% if (user.location != "") { %>
+          <% if (user) { %>
           <input class="form-search" placeholder="Enter a location" id="location_search" name="k" value=<%= user.location %>>
           <% } else { %>
           <input class="form-search" placeholder="Enter a location" id="location_search" name="k">
