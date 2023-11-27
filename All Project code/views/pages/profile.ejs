@@ -2,31 +2,58 @@
 <%- include ('../partials/menu') %>
 
 <main>
+    <script src="script.js"></script>
     <div class="profile-margin">
-        <h3>Welcome, <%= user.username %></h3>
+        <h3 style="padding-top: 1%;">Welcome, <%= user.username %></h3>
 
         <% if (reviews && reviews.length > 0) { %>
             <p>Here are your most recent reviews:</p>
-            <ul style="max-width: 45%; margin: 1%; border: 1px solid black;">
-                <% reviews.forEach(review => { %>
-                    <p><strong>Title:</strong> <%= review.title %></p>
-                    <p><strong>Content:</strong> <%= review.content %></p>
-                    <p><strong>Rating:</strong> <%= review.rating + ' ⭐'%></p>
+            <div class="row">
+                <% reviews.slice(0, 5).reverse().forEach(review => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong><%= review.restaurant %></strong></h5>
+                                <p class="card-text">
+                                    <strong>Content:</strong> <%= review.content %><br>
+                                    <strong>Rating:</strong>
+                                    <% yellow = review.rating %>
+                                    <% gray = 5 - yellow %>
+                                    <% for(j = 0; j < yellow; j++) { %>
+                                        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                                    <% } %>
+                                    <% for(k = 0; k < gray; k++) { %>
+                                        <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                                    <% } %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 <% }) %>
-            </ul>
-        <% } else { %>
-            <p>You don't have any reviews yet.</p>
-        <% } %>
-
-        <% if (wishlist && wishlist.length > 0) { %>
-            <p>Wishlist:</p>
-            <% wishlist.forEach(wish => { %>
-                <p><strong>Restaurant:</strong> <%= wish.restaurant %></p>
-            <% }) %>
-        <% } else { %> 
-            <p>Your wishlist is empty.</p>
-        <% } %>
-    </div>
+            </div>
+            <% } else { %>
+                <p>You don't have yet to review any restaurants.</p>
+            <% } %>
+    
+            <% if (wishlist && wishlist.length > 0) { %>
+                <div style="text-align: center;">
+                  <p>Wishlist:</p>
+                  <% wishlist.forEach(wish => { %>
+                    <div class="wishlist-item">
+                      <ul class="list-group" style="width: 45%; margin: 0 auto; text-align: left; display: inline-block;">
+                        <li class="list-group-item">
+                          <p><strong></strong> <%= wish.restaurant %>, <%= wish.located %></p>
+                        </li>
+                      </ul>
+                      <button type="button" class="remove-button" data-username="<%= wish.username %>" data-restaurant="<%= wish.restaurant %>" data-located="<%= wish.located %>"
+                        style="color: red; border-color: red; background-color: transparent; border-radius: 10px; margin-left: 10px;">Remove</button>
+                    </div>
+                  <% }) %>
+                </div>        
+            <% } else { %> 
+                <p style="margin-top: 100px;">Your wishlist is currently empty.</p>
+            <% } %>
+        </div>
 </main>
 
 <%- include ('../partials/footer') %>

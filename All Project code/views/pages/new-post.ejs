@@ -2,35 +2,55 @@
 <%- include ('../partials/menu') %>
 
 <main class="container">
-  <h1>Create New Post</h1>
+  <h2 style="margin-top: 1.5%;">Write Your Review For <%= name %> located in <%= location %></h1>
   <form action="/posts/add" method="POST">
     <div class="form-group">
       <input type="hidden" class="form-control" id="user" name="user" required value="<%= user.username %>">
     </div>
     <div class="form-group">
-      <label for="postTitle">Title</label>
-      <input type="text" class="form-control" id="postTitle" name="postTitle" required>
+      <input type="hidden" id="restaurantName" name="restaurantName" value="<%= name %>" />
+    </div>  
+    <div>
+      <input type="hidden" id="locationOf" name="locationOf" value="<%= location %>" />
     </div>
     <div class="form-group">
-      <label for="postContent">Content</label>
+      <label for="postContent">Review</label>
       <textarea class="form-control" id="postContent" name="postContent" rows="3" required></textarea>
     </div>
-    <div class="form-group">
+    <div class="ratings-buttons" style="margin-bottom: 5px; margin-top: 5px;">
       <t>Rating</t> <br>
-      <label for="one">⭐</label>
-      <input type="radio" name="starRating" id="one" value='1'/>
+      <input type="radio" name="starRating" id="one" value='1' required/>
+      <label for="one"><img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20"></label>
 
-      <label for="two">⭐⭐</label>
       <input type="radio" name="starRating" id="two" value='2'/>
+      <label for="two">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+      </label>
 
-      <label for="three">⭐⭐⭐</label>
       <input type="radio" name="starRating" id="three" value='3'/>
+      <label for="three">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+      </label>
 
-      <label for="four">⭐⭐⭐⭐</label>
       <input type="radio" name="starRating" id="four" value='4'/>
+      <label for="four">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+      </label>
 
-      <label for="five">⭐⭐⭐⭐⭐</label>
       <input type="radio" name="starRating" id="five" value='5'/>
+      <label for="five">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+      </label>
     </div>
     <div class="form-group">
       <input type="hidden" class="form-control" id="alias" name="alias" required value="<%= locals %>">

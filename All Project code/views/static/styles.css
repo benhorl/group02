@@ -47,7 +47,12 @@
 
 body {
   background: rgb(106, 185, 203);
-  font-family: "Ariel", sans-serif;  
+  font-family: "Ariel", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set minimum height to 100% of the viewport height */
+  margin: 0;
+
 }
 
 h4 {
@@ -58,6 +63,9 @@ h4 {
   background-color: white;
   margin-left: 5%;
   margin-right: 5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  height: 100vh;
 }
 
 .toggle-button {
@@ -81,4 +89,21 @@ h4 {
 #iconCheck {
   opacity: 0;
   position: absolute;
+}
+
+.rest-rev{
+  text-decoration: none;
+  color: white;
+  -webkit-text-stroke: black 1px;
+}
+
+.rest-rev:hover{
+  color: white;
+}
+
+.footer{
+  margin-top: auto;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 1px;
 }
