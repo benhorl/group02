@@ -27,11 +27,8 @@
           </li>
         </ul>
         <form class="d-flex" action="/search" method="GET">
-          <% if (user) { %>
-          <input class="form-search" placeholder="Enter a location" id="location_search" name="k" value=<%= user.location %>>
-          <% } else { %>
-          <input class="form-search" placeholder="Enter a location" id="location_search" name="k">
-          <% }; %>
+          <input class="form-search" placeholder="Enter a location" id="location_search" name="k" value=<%= location %>>
+
           <input class="form-search" placeholder="Search" id="search" name="k">
           <button type="submit" class="btn" id="searchButton" style="margin-right: 20px; margin-top: 0.5px; 
           background-image: url(https://cdn-icons-png.flaticon.com/512/6438/6438882.png);

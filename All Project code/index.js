@@ -82,11 +82,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.render('pages/login', { user: req.session.user });
+    res.render('pages/login', { user: req.session.user, location: req.session.location });
 });
 
 app.get('/register', (req, res) => {
-    res.render('pages/register', { user: req.session.user });
+    res.render('pages/register', { user: req.session.user, location: req.session.location });
 });
 
 app.post('/register', async (req, res) => {
@@ -126,8 +126,6 @@ app.post('/login', async (req, res, next) => {
                 app.locals.message = '';
 
                 req.session.user = user;
-                req.session.user.location = "";
-                req.session.save();
 
                 res.redirect('/home');
             } else {
@@ -140,6 +138,7 @@ app.post('/login', async (req, res, next) => {
             app.locals.error = '';
             res.redirect('/register');
         }
+
     } catch (error) {
         console.error('Database query error:', error);
         res.status(500).send('Internal Server Error');
@@ -159,8 +158,18 @@ app.get('/search', async (req, res) => {
     const place = strArr[0].slice(2);
     const search = strArr[1].slice(2);
 
-    req.session.user.location = place;
+    let userWishlist = [];
+    
+    if (req.session.user) { //if there is a user logged in
+        const username = req.session.user.username;
+        const wishlist = await db.any('SELECT restaurant FROM wishlist WHERE username = $1', [username]);
+        userWishlist = wishlist.map(item => item.restaurant);
+
+        // Update user location in the session
+    }
+    req.session.location = place;
     req.session.save();
+
 
     sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
     await sdk.v3_business_search({ location: place, term: search, sort_by: 'best_match', limit: '10' })
@@ -169,7 +178,7 @@ app.get('/search', async (req, res) => {
             for(let i = 0; i < resArr.length; i++){
                 restaurants[i] = resArr[i].name + "+" + resArr[i].alias;
             }
-            res.render('pages/search', { user: req.session.user, search: resArr });
+            res.render('pages/search', { user: req.session.user, search: resArr, userWishlist, location: req.session.location });
         })
         .catch(err => console.error(err));
 })
@@ -190,7 +199,7 @@ app.get('/reviews/:id', async (req, res) => {
             resArr = results.data.reviews;
             db.any(`SELECT * FROM posts WHERE alias = '${businessID}';`)
                 .then(data => {
-                    res.render('pages/reviews', { user: req.session.user, yelp: resArr, reviews: data, name: msg});
+                    res.render('pages/reviews', { user: req.session.user, location: req.session.location, yelp: resArr, reviews: data, name: msg});
                 })
 
             
@@ -208,7 +217,7 @@ app.get('/profile', async (req, res) => {
 
         const wishlist = await db.any('SELECT * FROM wishlist WHERE username = $1', [user.username]);
 
-        res.render('pages/profile', { user: req.session.user, reviews, wishlist })
+        res.render('pages/profile', { user: req.session.user, location: req.session.location, reviews, wishlist })
     } else { //don't allow access if not logged in and redirect
         res.redirect('/login');
       }
@@ -233,7 +242,7 @@ app.post("/posts/add/", (req, res) => {
 
 app.get('/posts/new/', (req, res) => {
     if (req.session.user)
-        res.render('pages/new-post', { user: req.session.user, locals: businessID });
+        res.render('pages/new-post', { user: req.session.user, location: req.session.location, locals: businessID });
     else
         res.redirect('/login');
 });
@@ -291,12 +300,12 @@ app.get('/logout', (req, res) => {
         } else {
             console.log('User logged out successfully');
         }
-        res.render('pages/login', { user: undefined, message: 'Logged out Successfully', error: '' }); //logs out user
+        res.render('pages/login', {location: undefined, user: undefined, message: 'Logged out Successfully', error: '',  }); //logs out user
     });
 });
 
 app.get('/home', (req, res) => {
-    res.render('pages/home', {user: req.session.user });
+    res.render('pages/home', { user: req.session.user, location: req.session.location });
 });
 
 //Welcome Test for Lab 11
