@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', function () { //event listener for
             })
             .then(response => {
                 if (response.ok) {
-                    //get the list-group that correlates with this button we are on
-                    const removeUI = this.closest('.list-group');
+                    //get the wishlist-item that correlates with this button we are on
+                    const removeUI = this.closest('.wishlist-item');
                     if(removeUI){ //if we find a match
                         removeUI.remove(); //remove it from our current UI
 
