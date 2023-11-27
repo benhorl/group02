@@ -1,75 +1,79 @@
 <%- include ('../partials/head') %>
 <%- include ('../partials/menu') %>
 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
 <style>
-  p {color: #ffffff; text-shadow: -1px 1px 2px #000, 1px 2px 6px #000, 1px -1px 0 #000, -1px -1px 0 #000}
+  h2{
+    color: #00d0f5; /* Matching the primary color for the welcome message */
+    font-family: 'Pacifico', cursive;
+  }
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background for captions */
+    color: #ffffff; /* White text color for captions */
+  }
+  .container{
+    background-color: rgb(255, 255, 255, 0.3); /* Semi-transparent black background for captions */
+    color: #ffffff; /* White text color for captions */
+    margin-bottom: 0.5px;
+  }
+  p {
+    color: #ffffff;
+        text-shadow: -1px 1px 2px #000, 1px 2px 6px #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        margin-bottom: 15px;
+  }
+
+  /* Add more styles as needed */
 </style>
 
-  <body>  
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-              </li>
-            </ul>
-          </div>
-        </div>
-    </nav>
-    <div id="carouselIndicators" class="carousel slide" data-bs-ride="true">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src= "../resources/img/aquarium_resturant.jpg" class="d-block w-100" width = "1500" height = "650">
-          <div class="carousel-caption">
-            <h3>Looking for a specific type of resturant?</h3>
-            <p>We got it.</p>
-          </div>
- 
-        </div>
-        <div class="carousel-item">
-          <img src="../resources/img/erlowestplate.jpg" class="d-block w-100" alt="Image 2" width = "1500" height = "650">
-          <div class="carousel-caption">
-            <h3>Search for your next resturant destination!</h3>
-            <p>Hungry? Check out what others have to say about your next resturant!</p>
-          </div> 
-        </div>
-        <div class="carousel-item">
-          <img src="../resources/img/indianfood.jpg" class="d-block w-100" alt="Image 3" width = "1500" height = "650">
-          <div class="carousel-caption">
-            <h3>Looking for a specific type of resturant?</h3>
-            <p>We got it.</p>
-          </div> 
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+<body>
+  <div id="carouselIndicators" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
+    <div class="carousel-inner">
+      <div class="container text-center mt-0.5">
+        <h2>Welcome to the Best Dining Experience!</h2>
+        <p>Explore our diverse restaurants and leave your reviews to help them serve you better.</p>
+      </div>
+      <div class="carousel-item active">
+        <img src= "../resources/img/aquarium_resturant.jpg" class="d-block w-100" width = "1500" height = "700">
+        <div class="carousel-caption">
+          <h3>Looking for a specific type of resturant?</h3>
+          <p>We got it.</p>
+        </div>
 
-    <h2><center>Welcome to the Best Dining Experience!</center></h2>
-
-    <div class="container text-center">
-      <p>Explore our diverse resturants and leave your reviews to help them serve you better.</p>
+      </div>
+      <div class="carousel-item">
+        <img src="../resources/img/erlowestplate.jpg" class="d-block w-100" alt="Image 2" width = "1500" height = "700">
+        <div class="carousel-caption">
+          <h3>Search for your next resturant destination!</h3>
+          <p>Hungry? Check out what others have to say about your next resturant!</p>
+        </div> 
+      </div>
+      <div class="carousel-item">
+        <img src="../resources/img/indianfood.jpg" class="d-block w-100" alt="Image 3" width = "1500" height = "700">
+        <div class="carousel-caption">
+          <h3>Looking for a specific type of resturant?</h3>
+          <p>We got it.</p>
+        </div> 
+      </div>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
-    <!--<footer class="text-center p-3">
-      <p>&copy; CSCI 3308 - Group Project</p>
-    </footer>-->
-    <%- include ('../partials/footer') %>
+  
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  </body>
+  <%- include ('../partials/footer') %>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>

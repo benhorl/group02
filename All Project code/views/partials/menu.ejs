@@ -1,6 +1,23 @@
 <header>
-  <nav class="navbar navbar-expand-lg border-bottom" style="padding-left: 1%; padding-right: 1%;">
-      <h2><a class="rest-rev" href="/home">Restaurant Reviews</a></h2>
+  <nav class="navbar navbar-expand-lg border-bottom ">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+    <style>
+      b {
+        background-color: rgba(61, 61, 61, 0.3);
+        color: #ffffff;
+        padding: 10px;
+        font-family: 'Pacifico', cursive;
+        text-shadow: -1px 1px 2px #fffdfd, 1px 4px 10px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
+      }
+
+      a {
+        color: #ffffff;
+        text-shadow: -1px 1px 2px #fffdfd, 1px 1px 1px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
+      }
+
+      
+    </style>
+      <b class="navbar-brand" href="#">Restaurant Reviews</b>
       <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse"
         aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,11 +36,10 @@
           <input class="form-search" placeholder="Enter a location" required id="location_search" name="k" value=<%= location %>>
           <input class="form-search" placeholder="Service" required id="search" name="k" value="<%= globalSearch %>">
           <button type="submit" class="btn" id="searchButton" style="margin-right: 20px; margin-top: 0.5px; 
-          background-image: url(https://cdn-icons-png.flaticon.com/512/6438/6438882.png);
+          background-image: url(../resources/img/icon.jpg);
           background-size: 27px 27px;
           background-repeat: no-repeat;"></button>
         </form>
-         
         <% if (user) { %>
          
           <div class="nav-item me-1">
