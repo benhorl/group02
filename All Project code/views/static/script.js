@@ -1,4 +1,4 @@
-function toggleButton(event, username) {
+function toggleButton(event, username, located) {
     const button = event.currentTarget;
     const iconPlus = button.querySelector('.iconPlus');
     const iconCheck = button.querySelector('.iconCheck');
@@ -10,15 +10,15 @@ function toggleButton(event, username) {
     iconCheck.style.opacity = iconCheck.style.opacity === '1' ? '0' : '1';
 
     if (button.classList.contains('checked')) {
-        addToWishlist(username, restaurant);
+        addToWishlist(username, restaurant, located);
     } else {
-        removeFromWishlist(username, restaurant);
+        removeFromWishlist(username, restaurant, located);
     }
 }
 
-async function addToWishlist(username, restaurant) {
+async function addToWishlist(username, restaurant, located) {
     try {
-        const response = await fetch(`/wishlist/${username}/${restaurant}`, {
+        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}`, {
             method: 'POST',
         });
 
@@ -32,9 +32,9 @@ async function addToWishlist(username, restaurant) {
     }
 }
 
-async function removeFromWishlist(username, restaurant) {
+async function removeFromWishlist(username, restaurant, located) {
     try {
-        const response = await fetch(`/wishlist/${username}/${restaurant}`, {
+        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}`, {
             method: 'DELETE',
         });
 
@@ -47,3 +47,40 @@ async function removeFromWishlist(username, restaurant) {
         console.error('Error:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () { //event listener for remove buttons
+    const removeButtons = document.querySelectorAll('.remove-button'); //store the remove buttons
+    removeButtons.forEach(button => { //parse through each remove button
+        button.addEventListener('click', function () { //when clicked
+            const username = this.getAttribute('data-username'); //get this username
+            const restaurant = this.getAttribute('data-restaurant'); //get this restaurant
+            const located = this.getAttribute('data-located'); //get this location
+
+            //send request using those attributes to delete from the database
+            fetch(`/wishlist/${username}/${restaurant}/${located}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    //get the list-group that correlates with this button we are on
+                    const removeUI = this.closest('.list-group');
+                    if(removeUI){ //if we find a match
+                        removeUI.remove(); //remove it from our current UI
+
+                        const remainingListGroups = document.querySelectorAll('.list-group');//check list-group
+                        if (remainingListGroups.length === 0) { //if list-group is empty
+                            location.reload(); //refresh the page
+                        }
+                    } else {
+                        console.error('List item not found.');
+                    }
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+});

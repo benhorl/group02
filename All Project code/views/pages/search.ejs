@@ -13,6 +13,9 @@
                     <th>Name</th>
                     <th>Image</th>
                     <th>Reviews</th>
+                    <% if(user){ %>
+                        <th>Wishlist</th>
+                    <% } %>
                 </tr>
             </thead>
             <tbody>
@@ -33,12 +36,12 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[0].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[0].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[0].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[0].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[0].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
@@ -60,17 +63,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[1].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[1].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[1].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[1].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[1].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                         
+                        <% } %>                          
                     </td>
                 </tr>
                 <tr>
@@ -87,17 +90,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[2].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[2].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[2].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[2].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[2].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                         
+                        <% } %>                           
                     </td>
                 </tr>
                 <tr>
@@ -114,17 +117,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[3].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[3].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[3].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[3].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[3].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                         
+                        <% } %>                              
                     </td>
                 </tr>
                 <tr>
@@ -141,17 +144,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[4].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[4].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[4].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[4].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[4].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                         
+                        <% } %>                        
                     </td>
                 </tr>
                 <tr>
@@ -168,12 +171,12 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[5].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[5].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[5].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[5].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[5].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
@@ -195,17 +198,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[6].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[6].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[6].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[6].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[6].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                        
+                        <% } %>                          
                     </td>
                 </tr>
                 <tr>
@@ -222,17 +225,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[7].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[7].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[7].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[7].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[7].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                        
+                        <% } %>                     
                     </td>
                 </tr>
                 <tr>
@@ -249,17 +252,17 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[8].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[8].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[8].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[8].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[8].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
                             <% } %>  
-                        <% } %>                         
+                        <% } %>                        
                     </td>
                 </tr>
                 <tr>
@@ -276,12 +279,12 @@
                     <td>
                         <% if (user) { %>
                             <% if (userWishlist.includes(search[9].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[9].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button checked" restaurant-name="<%= search[9].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
                                 </div>
                             <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[9].name %>" onclick="toggleButton(event, '<%= user.username %>')">
+                                <div class="toggle-button" restaurant-name="<%= search[9].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
                                     <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
                                     <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
                                 </div>
