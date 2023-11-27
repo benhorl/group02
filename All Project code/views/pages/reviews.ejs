@@ -6,18 +6,22 @@
 
 <main>
     <div class="container">
-    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
-        <h1>Reviews for <%= name %></h1>
-        <div class="col"></div>
-        <a href="/posts/new" class="btn btn-success mb-4">Add New Review</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Review</th>
-                    <th>Rating</th>
-                </tr>
-            </thead>
+    <h1 style="color: black; padding-top: 1%;">Reviews for <%= name %> located in <%= location %></h1>
+    <div class="col"></div>
+    <a href="/posts/new" class="btn btn-success mb-4">Add New Review</a>
+    <table class="table" style="width: 100%;">
+      <colgroup>
+        <col style="width: 10%;">
+        <col style="width: 78%;">
+        <col style="width: 12%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Review</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
             <tbody>
             <% for(let i = 0; i < reviews.length; i++){ %>
                 <tr>
@@ -25,10 +29,19 @@
                         <%= reviews[i].username %>
                     </td>
                     <td>
-                        <%= reviews[i].title  + ": " + reviews[i].content %>
+                        <%= reviews[i].content %>
                     </td>
                     <td>
-                        <%= reviews[i].rating + ' ⭐' %>
+                        <% yellow = reviews[i].rating %>
+                        <% gray = 5 - yellow %>
+                        <% for(j = 0; j < yellow; j++) { %>
+                            <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                        <% } %>
+                        <% if(gray > 0) { %>
+                            <% for(k = 0; k < gray; k++) { %>
+                                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                            <% } %>
+                        <% } %>
                     </td>
                 </tr>
             <% }; %>
@@ -40,7 +53,16 @@
                        <%= yelp[0].text %>
                     </td>
                     <td> 
-                        <%= yelp[0].rating + ' ⭐' %>
+                        <% yellow = yelp[0].rating %>
+                        <% gray = 5 - yellow %>
+                        <% for(j = 0; j < yellow; j++) { %>
+                            <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                        <% } %>
+                        <% if(gray > 0) { %>
+                            <% for(k = 0; k < gray; k++) { %>
+                                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                            <% } %>
+                        <% } %>
                     </td>
                 </tr>
                 <tr>
@@ -51,7 +73,16 @@
                         <%= yelp[1].text %>
                     </td>
                     <td> 
-                        <%= yelp[1].rating + ' ⭐' %>
+                        <% yellow = yelp[1].rating %>
+                        <% gray = 5 - yellow %>
+                        <% for(j = 0; j < yellow; j++) { %>
+                            <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                        <% } %>
+                        <% if(gray > 0) { %>
+                            <% for(k = 0; k < gray; k++) { %>
+                                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                            <% } %>
+                        <% } %>
                     </td>
                 </tr>
                 <tr>
@@ -62,7 +93,16 @@
                         <%= yelp[2].text %>
                     </td>
                     <td> 
-                        <%= yelp[2].rating + ' ⭐' %>
+                        <% yellow = yelp[2].rating %>
+                        <% gray = 5 - yellow %>
+                        <% for(j = 0; j < yellow; j++) { %>
+                            <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                        <% } %>
+                        <% if(gray > 0) { %>
+                            <% for(k = 0; k < gray; k++) { %>
+                                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                            <% } %>
+                        <% } %>
                     </td>
                 </tr>
             </tbody>

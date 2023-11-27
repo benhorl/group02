@@ -69,6 +69,9 @@ app.use(express.static(path.join(__dirname, 'views', 'static')));
 // *****************************************************
 
 // Authentication Middleware.
+
+let globalSearch = '';
+
 const auth = (req, res, next) => {
     if (!req.session.user) {
         // Default to login page.
@@ -78,15 +81,15 @@ const auth = (req, res, next) => {
 };
 
 app.get('/', (req, res) => {
-    res.redirect('/login');
+    res.redirect('/home');
 });
 
 app.get('/login', (req, res) => {
-    res.render('pages/login', { user: req.session.user });
+    res.render('pages/login', { user: req.session.user, location: req.session.location, globalSearch });
 });
 
 app.get('/register', (req, res) => {
-    res.render('pages/register', { user: req.session.user });
+    res.render('pages/register', { user: req.session.user, location: req.session.location, globalSearch });
 });
 
 app.post('/register', async (req, res) => {
@@ -126,8 +129,6 @@ app.post('/login', async (req, res, next) => {
                 app.locals.message = '';
 
                 req.session.user = user;
-                req.session.user.location = "";
-                req.session.save();
 
                 res.redirect('/home');
             } else {
@@ -140,6 +141,7 @@ app.post('/login', async (req, res, next) => {
             app.locals.error = '';
             res.redirect('/register');
         }
+
     } catch (error) {
         console.error('Database query error:', error);
         res.status(500).send('Internal Server Error');
@@ -158,9 +160,20 @@ app.get('/search', async (req, res) => {
     let strArr = req._parsedOriginalUrl.query.split("&");
     const place = strArr[0].slice(2);
     const search = strArr[1].slice(2);
+    globalSearch = search;
 
-    req.session.user.location = place;
+    let userWishlist = [];
+    
+    if (req.session.user) { //if there is a user logged in
+        const username = req.session.user.username;
+        const wishlist = await db.any('SELECT restaurant FROM wishlist WHERE username = $1', [username]);
+        userWishlist = wishlist.map(item => item.restaurant);
+
+        // Update user location in the session
+    }
+    req.session.location = place;
     req.session.save();
+
 
     sdk.auth(process.env.API_KEY); //https://docs.developer.yelp.com/reference/v3_business_search
     await sdk.v3_business_search({ location: place, term: search, sort_by: 'best_match', limit: '10' })
@@ -169,7 +182,7 @@ app.get('/search', async (req, res) => {
             for(let i = 0; i < resArr.length; i++){
                 restaurants[i] = resArr[i].name + "+" + resArr[i].alias;
             }
-            res.render('pages/search', { user: req.session.user, search: resArr });
+            res.render('pages/search', { user: req.session.user, search: resArr, userWishlist, location: req.session.location, globalSearch });
         })
         .catch(err => console.error(err));
 })
@@ -190,7 +203,7 @@ app.get('/reviews/:id', async (req, res) => {
             resArr = results.data.reviews;
             db.any(`SELECT * FROM posts WHERE alias = '${businessID}';`)
                 .then(data => {
-                    res.render('pages/reviews', { user: req.session.user, yelp: resArr, reviews: data, name: msg});
+                    res.render('pages/reviews', { user: req.session.user, location: req.session.location, yelp: resArr, reviews: data, name: msg, globalSearch});
                 })
 
             
@@ -199,7 +212,6 @@ app.get('/reviews/:id', async (req, res) => {
 })
 
 app.get('/profile', async (req, res) => {
-    console.log(app.locals.events);
     if (req.session.user) { //check if logged in
         const user = req.session.user;
 
@@ -208,7 +220,7 @@ app.get('/profile', async (req, res) => {
 
         const wishlist = await db.any('SELECT * FROM wishlist WHERE username = $1', [user.username]);
 
-        res.render('pages/profile', { user: req.session.user, reviews, wishlist })
+        res.render('pages/profile', { user: req.session.user, location: req.session.location, reviews, wishlist, globalSearch})
     } else { //don't allow access if not logged in and redirect
         res.redirect('/login');
       }
@@ -219,9 +231,9 @@ app.get('/profile', async (req, res) => {
 // });
 
 app.post("/posts/add/", (req, res) => {
-    const { user, postTitle, postContent, starRating, alias } = req.body;
+    const { user, restaurantName, locationOf, postContent, starRating, alias } = req.body;
 
-    db.none('INSERT INTO posts (username, title, content, rating, alias) VALUES($1, $2, $3, $4, $5)', [user, postTitle, postContent, starRating, alias])
+    db.none('INSERT INTO posts (username, restaurant, located, content, rating, alias) VALUES($1, $2, $3, $4, $5, $6)', [user, restaurantName, locationOf, postContent, starRating, alias])
         .then(() => {
             res.redirect('/reviews/' + alias);
         })
@@ -232,8 +244,15 @@ app.post("/posts/add/", (req, res) => {
 });
 
 app.get('/posts/new/', (req, res) => {
+    let str;
+    let msg;
+    for (let i = 0; i < restaurants.length; i++){
+        str = restaurants[i].split("+");
+        if(str[1] == businessID)
+            msg = str[0];
+    }
     if (req.session.user)
-        res.render('pages/new-post', { user: req.session.user, locals: businessID });
+        res.render('pages/new-post', { user: req.session.user, location: req.session.location, locals: businessID, name: msg, globalSearch });
     else
         res.redirect('/login');
 });
@@ -251,16 +270,16 @@ app.post("/posts/delete/:id", (req, res) => {
         });
 });
 
-app.post('/wishlist/:username/:restaurant', async(req, res) => {
-    const { username, restaurant } = req.params;
+app.post('/wishlist/:username/:restaurant/:located', async(req, res) => {
+    const { username, restaurant, located } = req.params;
 
-    const duplicate = await db.oneOrNone('SELECT * FROM wishlist WHERE username = $1 AND restaurant = $2', [username, restaurant]);
+    const duplicate = await db.oneOrNone('SELECT * FROM wishlist WHERE username = $1 AND restaurant = $2 AND located = $3', [username, restaurant, located]);
 
     if (duplicate) {
         // Restaurant is already in the wishlist, return an error response
         return res.status(400).send('Restaurant already in the wishlist');
     }
-    db.none('INSERT INTO wishlist(username, restaurant) VALUES($1, $2)', [username, restaurant])
+    db.none('INSERT INTO wishlist(username, restaurant, located) VALUES($1, $2, $3)', [username, restaurant, located])
         .then(() => {
             res.status(200).send('Added to wishlist successfully');
         })
@@ -270,12 +289,12 @@ app.post('/wishlist/:username/:restaurant', async(req, res) => {
         });
 });
 
-app.delete('/wishlist/:username/:restaurant', (req, res) => {
-    const { username, restaurant } = req.params;
+app.delete('/wishlist/:username/:restaurant/:located', (req, res) => {
+    const { username, restaurant, located } = req.params;
 
-    db.none('DELETE FROM wishlist WHERE username = $1 AND restaurant = $2', [username, restaurant])
+    db.none('DELETE FROM wishlist WHERE username = $1 AND restaurant = $2 AND located = $3', [username, restaurant, located])
         .then(() => {
-            res.status(200).send('Added to wishlist successfully');
+            res.status(200).send('Deleted from wishlist successfully');
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -291,12 +310,12 @@ app.get('/logout', (req, res) => {
         } else {
             console.log('User logged out successfully');
         }
-        res.render('pages/login', { user: undefined, message: 'Logged out Successfully', error: '' }); //logs out user
+        res.render('pages/login', {location: undefined, user: undefined, message: 'Logged out Successfully', error: '', globalSearch }); //logs out user
     });
 });
 
 app.get('/home', (req, res) => {
-    res.render('pages/home', {user: req.session.user });
+    res.render('pages/home', { user: req.session.user, location: req.session.location, globalSearch });
 });
 
 //Welcome Test for Lab 11

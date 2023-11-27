@@ -6,7 +6,8 @@ CREATE TABLE users (
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50),
-    title VARCHAR(200) NOT NULL,
+    restaurant VARCHAR(200) NOT NULL,
+    located VARCHAR(100) NOT NULL,
     content VARCHAR,
     rating CHAR,
     alias VARCHAR,
@@ -16,6 +17,7 @@ CREATE TABLE posts (
 CREATE TABLE wishlist (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50),
-    restaurant VARCHAR(100),
+    restaurant VARCHAR(200),
+    located VARCHAR(100),
     FOREIGN KEY (username) REFERENCES users(username)
 );
