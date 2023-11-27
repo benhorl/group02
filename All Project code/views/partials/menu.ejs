@@ -24,12 +24,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul class="navbar-nav me-auto"> 
-<!--           <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/home">Home</a>
-          </li> -->
+          </li> 
           <!-- <a class="nav-link active " aria-current="page" href="/discover">Discover</a> -->
           <li class="nav-item">
-            <a class="nav-link active" style="color: white; -webkit-text-stroke: black 0.5px; padding-left: 30%;" aria-current="page" href="/profile">Profile</a>
+            <a class="nav-link active" style="color: rgb(0, 0, 0); -webkit-text-stroke: black 0.5px; padding-left: 30%;" aria-current="page" href="/profile">Profile</a>
           </li>
         </ul>
         <form class="d-flex" action="/search" method="GET">
@@ -44,12 +44,12 @@
          
           <div class="nav-item me-1">
             <% let text = "Logout" %>
-            <a class="nav-link active" style="color: white; -webkit-text-stroke: black 0.5px;" href="/logout"> <%= text %> </a>
+            <a class="nav-link active" href="/logout"> <%= text %> </a>
           </div>
           
         <% } else { %>
           <div class="nav-item me-1">
-            <a class="nav-link active" style="color: white; -webkit-text-stroke: black 0.5px;" href="/login">Login</a>
+            <a class="nav-link active" href="/login">Login</a>
           </div>
         <% } %>
       </div>
