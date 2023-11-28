@@ -13,6 +13,7 @@ const bcrypt = require('bcrypt'); //  To hash passwords
 const sdk = require('api')('@yelp-developers/v1.0#xtskmqwlofwyovu');
 const sdkR = require('api')('@yelp-developers/v1.0#1a49qhalkmfd1mf');
 const prompts = require('prompts');
+const { decode } = require('querystring');
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB -->
@@ -158,8 +159,9 @@ let restaurants = [];
 app.get('/search', async (req, res) => {
     let resArr;
     let strArr = req._parsedOriginalUrl.query.split("&");
-    const place = strArr[0].slice(2);
-    const search = strArr[1].slice(2);
+    const place = decodeURIComponent(strArr[0].slice(2)).replace('+', '\xa0');
+    const search = decodeURIComponent(strArr[1].slice(2)).replace('+', '\xa0');
+
     globalSearch = search;
 
     let userWishlist = [];
