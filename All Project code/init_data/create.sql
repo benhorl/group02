@@ -19,5 +19,6 @@ CREATE TABLE wishlist (
     username VARCHAR(50),
     restaurant VARCHAR(200),
     located VARCHAR(100),
+    alias VARCHAR,
     FOREIGN KEY (username) REFERENCES users(username)
 );
