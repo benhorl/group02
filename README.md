@@ -9,14 +9,20 @@ Technology Stack:
 - Database: PostgreSQL
 - Container Control: Docker
 - Application Server: NodeJS
+
 External APIs:
 - Yelp
+
 Testing Tool: Chai, Mocha
+
 Deployment Environment: LocalHost and Class Environment
+
 UI Tools: HTML, EJS
+
 Pre-requisites:
 - Must have docker
 - Search Engine
+
 Run Intructions:
 
 How to run tests:
