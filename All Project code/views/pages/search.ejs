@@ -10,11 +10,13 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Image</th>
-                        <th>Reviews</th>
+                        <th style="width: 18%">Name</th>
+                        <th style="width: 18%">Image</th>
+                        <th style="width: 18%">Reviews</th>
+                        <th style="width: 18%">Address</th>
+                        <th style="width: 18%">Average Rating</th>
                         <% if(user){ %>
-                            <th>Wishlist</th>
+                            <th style="width: 10%">Wishlist</th>
                         <% } %>
                     </tr>
                 </thead>
@@ -33,6 +35,21 @@
                             <td> 
                                 <a href=<%=link %>> <button class="btn btn-info" 
                                     type="button">See Reviews for <%= search[i].name %></button></a>
+                            </td>
+                            <td>
+                                <a href="https://www.google.com/maps/place/<%= search[i].location.address1 %>, <%= search[i].location.city %>, <%= search[i].location.state %> <%= search[i].location.zip_code %>"><%= search[i].location.address1 %>, <%= search[i].location.city %>, <%= search[i].location.state %> <%= search[i].location.zip_code %></a>
+                            </td>
+                            <td>
+                                <% yellow = Math.round(search[i].rating) %>
+                                <% gray = 5 - yellow %>
+                                <% for(j = 0; j < yellow; j++) { %>
+                                    <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                                <% } %>
+                                <% if(gray > 0) { %>
+                                    <% for(k = 0; k < gray; k++) { %>
+                                        <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                                    <% } %>
+                                <% } %>
                             </td>
                             <td>
                                 <% if (user) { %>
