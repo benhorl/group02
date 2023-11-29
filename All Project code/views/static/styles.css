@@ -116,3 +116,57 @@ h4 {
 #userClick:hover {
   color: darkblue;
 }
+
+.rBtn {
+	border: none;
+	font-family: 'Lato';
+	font-size: inherit;
+	color: inherit;
+  background: inherit;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	position: relative;
+}
+
+/* Pseudo elements for icons */
+.rBtn:before {
+	font-family: 'FontAwesome';
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+}
+
+.rBtn-1 { /* Size and color */
+  border-radius: 10px;
+  padding: 15px 15px 15px 60px;
+	background: #00449c;
+	color: #fff;
+  font-size: 12px;
+}
+
+.rBtn-1:hover {
+	background: #00377e;
+}
+
+.rBtn-1:active {
+	background: #00377e;
+	top: 2px;
+}
+
+.rBtn-1:before { /*shaded area*/
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15);
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 2.4;
+	font-size: 20px; /* changes size of icon*/
+	width: 23%; /*size of shaded area*/
+}
+
+.icon-cart:before {
+	content: "\f040"
+}

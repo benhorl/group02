@@ -5,10 +5,13 @@
 
 
 <main>
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
     <div class="container">
     <h1 style="color: #00d0f5; padding-top: 1%;">Reviews for <%= name %> located in <%= location %></h1>
     <div class="col"></div>
-    <a  style="color: #000000;"  href="/posts/new" class="btn btn-success mb-4">Add New Review</a>
     <table class="table" style="width: 100%;">
       <colgroup>
         <col style="width: 10%;">
@@ -107,6 +110,7 @@
                 </tr>
             </tbody>
         </table>
+        <a href="/posts/new"><button class="rBtn rBtn-1 rSep icon-cart" style="float: right;">Add New Review</button></a>
     </div>
 </main>
 
