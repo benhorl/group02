@@ -4,296 +4,58 @@
 <main>
     <script src="script.js"></script>
     <div class="container">
-    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
-        <h1>Search Results</h1>
-        <div class="col"></div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Reviews</th>
-                    <% if(user){ %>
-                        <th>Wishlist</th>
+        <% if (search && search.length > 0) { %>
+            <h1>Search Results</h1>
+            <div class="col"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Reviews</th>
+                        <% if(user){ %>
+                            <th>Wishlist</th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < search.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= search[i].name %>
+                            </td>
+                            <td> 
+                                <img src=<%=search[i].image_url %> width=150> 
+                            </td>
+
+                            <% let link='/reviews/' + search[i].alias %>
+
+                            <td> 
+                                <a href=<%=link %>> <button class="btn btn-info" 
+                                    type="button">See Reviews for <%= search[i].name %></button></a>
+                            </td>
+                            <td>
+                                <% if (user) { %>
+                                    <% if (userWishlist.includes(encodeURIComponent(search[i].alias))) { %>
+                                        <div class="toggle-button checked" restaurant-name="<%= encodeURIComponent(search[i].name) %>" restaurant-alias="<%= search[i].alias %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
+                                            <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
+                                            <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
+                                        </div>
+                                    <% } else { %>
+                                        <div class="toggle-button" restaurant-name="<%= encodeURIComponent(search[i].name) %>" restaurant-alias="<%= search[i].alias %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
+                                            <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
+                                            <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
+                                        </div>
+                                    <% } %>  
+                                <% } %>                  
+                            </td>
+                        </tr>
                     <% } %>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <%= search[0].name %>
-                    </td>
-                    <td> 
-                        <img src=<%=search[0].image_url %> width=150> 
-                    </td>
-
-                    <% let link0='/reviews/' + search[0].alias %>
-
-                    <td> 
-                        <a href=<%=link0 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[0].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[0].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[0].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[0].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                  
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[1].name %>
-                    </td>
-                    <td> <img src=<%=search[1].image_url %> width=150> </td>
-                    
-                    <% let link1='/reviews/' + search[1].alias %>
-
-                    <td> <a href=<%=link1 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[1].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[1].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[1].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[1].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                          
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[2].name %>
-                    </td>
-                    <td> <img src=<%=search[2].image_url %> width=150> </td>
-                    
-                    <% let link2='/reviews/' + search[2].alias %>
-
-                    <td> <a href=<%=link2 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[2].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[2].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[2].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[2].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                           
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[3].name %>
-                    </td>
-                    <td> <img src=<%=search[3].image_url %> width=150> </td>
-                    
-                    <% let link3='/reviews/' + search[3].alias %>
-
-                    <td> <a href=<%=link3 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[3].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[3].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[3].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[3].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                              
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[4].name %>
-                    </td>
-                    <td> <img src=<%=search[4].image_url %> width=150> </td>
-                    
-                    <% let link4='/reviews/' + search[4].alias %>
-
-                    <td> <a href=<%=link4 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[4].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[4].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[4].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[4].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[5].name %>
-                    </td>
-                    <td> <img src=<%=search[5].image_url %> width=150> </td>
-                    
-                    <% let link5='/reviews/' + search[5].alias %>
-
-                    <td> <a href=<%=link5 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[5].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[5].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[5].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[5].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                         
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[6].name %>
-                    </td>
-                    <td> <img src=<%=search[6].image_url %> width=150> </td>
-                    
-                    <% let link6='/reviews/' + search[6].alias %>
-
-                    <td> <a href=<%=link6 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[6].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[6].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[6].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[6].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                          
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[7].name %>
-                    </td>
-                    <td> <img src=<%=search[7].image_url %> width=150> </td>
-                    
-                    <% let link7='/reviews/' + search[7].alias %>
-
-                    <td> <a href=<%=link7 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[7].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[7].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[7].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[7].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                     
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[8].name %>
-                    </td>
-                    <td> <img src=<%=search[8].image_url %> width=150> </td>
-                    
-                    <% let link8='/reviews/' + search[8].alias %>
-
-                    <td> <a href=<%=link8 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[8].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[8].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[8].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[8].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <%= search[9].name %>
-                    </td>
-                    <td> <img src=<%=search[9].image_url %> width=150> </td>
-                    
-                    <% let link9='/reviews/' + search[9].alias %>
-
-                    <td> <a href=<%=link9 %>> <button class="btn btn-info" 
-                            type="button">See Reviews for <%= search[9].name %></button></a>
-                    </td>
-                    <td>
-                        <% if (user) { %>
-                            <% if (userWishlist.includes(search[9].name)) { %>
-                                <div class="toggle-button checked" restaurant-name="<%= search[9].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
-                                </div>
-                            <% } else { %>
-                                <div class="toggle-button" restaurant-name="<%= search[9].name %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                    <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                    <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
-                                </div>
-                            <% } %>  
-                        <% } %>                        
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        <% } else { %>
+            <h2 style="text-align: center; padding-top: 20%;">Hmmmm, nothing was found. Modify your search and try again.</h2>
+        <% } %>
     </div>
 </main>
 

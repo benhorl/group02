@@ -4,21 +4,22 @@ function toggleButton(event, username, located) {
     const iconCheck = button.querySelector('.iconCheck');
 
     const restaurant = button.getAttribute('restaurant-name');
+    const alias = button.getAttribute('restaurant-alias');
 
     button.classList.toggle('checked');
     iconPlus.style.opacity = iconPlus.style.opacity === '0' ? '1' : '0';
     iconCheck.style.opacity = iconCheck.style.opacity === '1' ? '0' : '1';
 
     if (button.classList.contains('checked')) {
-        addToWishlist(username, restaurant, located);
+        addToWishlist(username, restaurant, located, alias);
     } else {
-        removeFromWishlist(username, restaurant, located);
+        removeFromWishlist(username, restaurant, located, alias);
     }
 }
 
-async function addToWishlist(username, restaurant, located) {
+async function addToWishlist(username, restaurant, located, alias) {
     try {
-        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}`, {
+        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
             method: 'POST',
         });
 
@@ -32,9 +33,9 @@ async function addToWishlist(username, restaurant, located) {
     }
 }
 
-async function removeFromWishlist(username, restaurant, located) {
+async function removeFromWishlist(username, restaurant, located, alias) {
     try {
-        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}`, {
+        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
             method: 'DELETE',
         });
 
@@ -55,9 +56,10 @@ document.addEventListener('DOMContentLoaded', function () { //event listener for
             const username = this.getAttribute('data-username'); //get this username
             const restaurant = this.getAttribute('data-restaurant'); //get this restaurant
             const located = this.getAttribute('data-located'); //get this location
+            const alias = this.getAttribute('data-alias');
 
             //send request using those attributes to delete from the database
-            fetch(`/wishlist/${username}/${restaurant}/${located}`, {
+            fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
                 method: 'DELETE'
             })
             .then(response => {

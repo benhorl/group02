@@ -65,7 +65,7 @@ h4 {
   margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .toggle-button {
@@ -106,4 +106,13 @@ h4 {
   text-align: center;
   padding-top: 15px;
   padding-bottom: 1px;
+}
+
+#userClick {
+  text-decoration: none;
+  color: black;
+}
+
+#userClick:hover {
+  color: darkblue;
 }
