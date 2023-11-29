@@ -70,9 +70,9 @@ h4 {
 
 .toggle-button {
   cursor: pointer;
-  width: 40px;
-  height: 40px;
-  background-color: #3498db;
+  width: 35px;
+  height: 35px;
+  background-color: inherit;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -89,6 +89,15 @@ h4 {
 #iconCheck {
   opacity: 0;
   position: absolute;
+}
+
+.toggle-button.checked {
+  background-color: rgb(0, 221, 0);
+}
+
+/* Styles for unchecked state */
+.toggle-button:not(.checked) {
+  background-color: rgb(0, 183, 250);
 }
 
 .rest-rev{
@@ -167,6 +176,72 @@ h4 {
 	width: 23%; /*size of shaded area*/
 }
 
+.rBtn-2 { /* Size and color */
+  border-radius: 10px;
+  padding: 10px 10px 10px 35px;
+	background: rgb(0, 104, 240);
+	color: #fff;
+  font-size: 10px;
+}
+
+.rBtn-2:hover {
+	background: rgb(0, 94, 218);
+}
+
+.rBtn-2:active {
+	background: rgb(0, 94, 218);
+	top: 2px;
+}
+
+.rBtn-2:before { /*shaded area*/
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15); /*creates shade*/
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 2.4;
+	font-size: 15px; /* changes size of icon*/
+	width: 28%; /*size of shaded area*/
+}
+
+.rBtn-3 { /* Size and color */
+  border-radius: 10px;
+  padding: 10px 10px 10px 35px;
+	background: rgb(130, 130, 130);
+	color: #fff;
+  font-size: 10px;
+}
+
+.rBtn-3:hover {
+	background: rgb(100, 100, 100);
+}
+
+.rBtn-3:active {
+	background: rgb(100, 100, 100);
+	top: 2px;
+}
+
+.rBtn-3:before { /*shaded area*/
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15); /*creates shade*/
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 2.4;
+	font-size: 15px; /* changes size of icon*/
+	width: 28%; /*size of shaded area*/
+}
+
 .icon-pencil:before {
-	content: "\f040"
+	content: "\f040";
+}
+
+.icon-star:before {
+  content: "\f005";
+}
+
+.icon-car:before{
+  content: "\f041";
 }
