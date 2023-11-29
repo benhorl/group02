@@ -157,7 +157,7 @@ h4 {
 
 .rBtn-1:before { /*shaded area*/
   border-radius: 10px;
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.15); /*creates shade*/
 	position: absolute;
 	height: 100%;
 	left: 0;
@@ -167,6 +167,6 @@ h4 {
 	width: 23%; /*size of shaded area*/
 }
 
-.icon-cart:before {
+.icon-pencil:before {
 	content: "\f040"
 }
