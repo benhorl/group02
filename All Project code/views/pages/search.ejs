@@ -4,72 +4,81 @@
 <main>
     <script src="script.js"></script>
     <div class="container">
+        <style>
+            .h5adjust {
+              white-space: nowrap; /*keeps text on one line*/
+              overflow: hidden; /*hides any overflox*/
+            }
+          </style>
+          
+          <script>
+window.onload = function adjustFontSize() {
+    var resizeElements = document.querySelectorAll(".h5adjust");
+
+    resizeElements.forEach(function (resize) {
+        var containerWidth = resize.offsetWidth; // width of container
+        var textWidth = resize.scrollWidth; // width of text
+
+        if (textWidth > containerWidth) {
+            var fontSize = parseInt(window.getComputedStyle(resize).fontSize); // computed style returns object of CSS info and we extract the fontSize
+            resize.style.fontSize = fontSize - 1 + "px"; // lower it one px
+            adjustFontSize(); // call recursively until it fits
+        }
+
+        console.log("Container Width:", containerWidth);
+        console.log("Text Width:", textWidth);
+    });
+};
+
+        </script>
+        
         <% if (search && search.length > 0) { %>
-            <h1>Search Results</h1>
-            <div class="col"></div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="width: 18%">Name</th>
-                        <th style="width: 18%">Image</th>
-                        <th style="width: 18%">Reviews</th>
-                        <th style="width: 18%">Address</th>
-                        <th style="width: 18%">Average Rating</th>
-                        <% if(user){ %>
-                            <th style="width: 10%">Wishlist</th>
-                        <% } %>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let i = 0; i < search.length; i++) { %>
-                        <tr>
-                            <td>
-                                <%= search[i].name %>
-                            </td>
-                            <td> 
-                                <img src=<%=search[i].image_url %> width=150> 
-                            </td>
-
-                            <% let link='/reviews/' + search[i].alias %>
-
-                            <td> 
-                                <a href=<%=link %>> <button class="btn btn-info" 
-                                    type="button">See Reviews for <%= search[i].name %></button></a>
-                            </td>
-                            <td>
-                                <a href="https://www.google.com/maps/place/<%= search[i].location.address1 %>, <%= search[i].location.city %>, <%= search[i].location.state %> <%= search[i].location.zip_code %>"><%= search[i].location.address1 %>, <%= search[i].location.city %>, <%= search[i].location.state %> <%= search[i].location.zip_code %></a>
-                            </td>
-                            <td>
-                                <% yellow = Math.round(search[i].rating) %>
-                                <% gray = 5 - yellow %>
-                                <% for(j = 0; j < yellow; j++) { %>
-                                    <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
-                                <% } %>
-                                <% if(gray > 0) { %>
-                                    <% for(k = 0; k < gray; k++) { %>
-                                        <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
-                                    <% } %>
-                                <% } %>
-                            </td>
-                            <td>
+            <div class="row" style="padding-bottom: 1%; padding-top: 1%; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); grid-auto-rows: 1fr;">             
+                <% for (let i = 0; i < search.length; i++) { %>
+                    <div class="card">
+                        <img class="card-img-top" style="height: 12rem; padding-top: 5%;" src="<%=search[i].image_url %>" alt="Restaurant">
+                        <div class="card-body">
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <h5 class="card-title h5adjust" style="padding-bottom: 2%; max-width: 80%;"><%= search[i].name %></h5>
                                 <% if (user) { %>
                                     <% if (userWishlist.includes(encodeURIComponent(search[i].alias))) { %>
                                         <div class="toggle-button checked" restaurant-name="<%= encodeURIComponent(search[i].name) %>" restaurant-alias="<%= search[i].alias %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                            <span class="iconPlus" id="iconPlus" style="opacity: 0;">+</span>
-                                            <span class="iconCheck" id="iconCheck" style="opacity: 1;">&#10003;</span>
+                                            <span class="iconPlus" id="iconPlus" style="opacity: 0;"> <i class="fa fa-plus" style="color: white;"></i> </span>
+                                            <span class="iconCheck" id="iconCheck" style="opacity: 1;"> <i class="fa fa-check" aria-hidden="true" style="color: white;"></i> </span>
                                         </div>
                                     <% } else { %>
                                         <div class="toggle-button" restaurant-name="<%= encodeURIComponent(search[i].name) %>" restaurant-alias="<%= search[i].alias %>" onclick="toggleButton(event, '<%= user.username %>', '<%= location %>')">
-                                            <span class="iconPlus" id="iconPlus" style="opacity: 1;">+</span>
-                                            <span class="iconCheck" id="iconCheck" style="opacity: 0;">&#10003;</span>
+                                            <span class="iconPlus" id="iconPlus" style="opacity: 1;"> <i class="fa fa-plus" style="color: white;"></i> </span>
+                                            <span class="iconCheck" id="iconCheck" style="opacity: 0;"> <i class="fa fa-check" aria-hidden="true" style="color: white;"></i> </span>
                                         </div>
                                     <% } %>  
-                                <% } %>                  
-                            </td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
+                                <% } %>
+                            </div>
+                            <% let link='/reviews/' + search[i].alias %>
+                            <h8 class="card-text" style="padding-bottom: 50px;">Rating:
+                                <% yellow = Math.round(search[i].rating) %>
+                                    <% gray = 5 - yellow %>
+                                    <% for(j = 0; j < yellow; j++) { %>
+                                        <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                                    <% } %>
+                                    <% if(gray > 0) { %>
+                                        <% for(k = 0; k < gray; k++) { %>
+                                            <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                                        <% } %>
+                                    <% } %>
+                            </h8>
+                            <div style="padding-top: 5%; display: flex; justify-content: space-between;">
+                                <p class="card-text"><a href="https://www.google.com/maps/place/<%= search[i].location.address1 %>, <%= search[i].location.city %>, <%= search[i].location.state %> <%= search[i].location.zip_code %>"><button class="rBtn rBtn-3 icon-car" 
+                                    type="button">Directions%></button></a>
+                                </p>
+                                <p class="card-text" style="float: right;"><a href=<%=link %>> <button class="rBtn rBtn-2 icon-star" 
+                                    type="button">Reviews%></button></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
         <% } else { %>
             <h2 style="text-align: center; padding-top: 20%;">Hmmmm, nothing was found. Modify your search and try again.</h2>
         <% } %>
