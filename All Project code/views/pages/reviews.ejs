@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <div style="padding: 1% 3%; display: flex; justify-content: space-between;">
                             <h5 class="card-title"><a id="userClick"><%= reviews[i].username %></a></h5>
-                            <a href="/profile/<%= reviews[i].username %>" id="userClick" class="card-link" style="margin-top: auto;">
+                            <a title="Click to go to profile" href="/profile/<%= reviews[i].username %>" id="userClick" class="card-link" style="margin-top: auto;">
                                 <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 30px; float: right;"></i>
                             </a>  
                         </div>
@@ -59,7 +59,7 @@
             <% } %>
 
             <% for(let i = 0; i < yelp.length; i++) { %>
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem; outline-width: 5px; outline-color: lightcoral;">
                     <div class="card-body">
                         <div style="padding: 1% 3%; display: flex; justify-content: space-between;">
                             <h5 class="card-title"><%= yelp[i].user.name %></h5>
