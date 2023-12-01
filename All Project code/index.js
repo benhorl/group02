@@ -242,6 +242,36 @@ app.get('/profile/:Username?', async (req, res) => {
     }
 });
 
+app.get('/wishlist/:Username?', async (req, res) => {
+    const currentUser = req.session.user;
+
+    if (req.params.Username) {
+        const viewedUsername = req.params.Username.toLowerCase();
+        const viewedUser = await db.oneOrNone('SELECT * FROM users WHERE username ILIKE $1', [viewedUsername]);
+
+        if (currentUser && viewedUsername === currentUser.username.toLowerCase()) {
+            const reviews = await db.any('SELECT * FROM posts WHERE username ILIKE $1', [currentUser.username]);
+            const wishlist = await db.any('SELECT * FROM wishlist WHERE username ILIKE $1', [currentUser.username]);
+
+            res.render('pages/profile', { user: currentUser, location: req.session.location, reviews, wishlist, globalSearch });
+        } else if (viewedUser) {
+            const reviews = await db.any('SELECT * FROM posts WHERE username ILIKE $1', [viewedUsername]);
+            const wishlist = await db.any('SELECT * FROM wishlist WHERE username ILIKE $1', [viewedUsername]);
+
+            res.render('pages/other-profile', { user: currentUser, viewedUser, location: req.session.location, globalSearch, reviews, wishlist });
+        } else {
+            res.status(404).send('User not found!');
+        }
+    } else if (currentUser) {
+        const reviews = await db.any('SELECT * FROM posts WHERE username ILIKE $1', [currentUser.username]);
+        const wishlist = await db.any('SELECT * FROM wishlist WHERE username ILIKE $1', [currentUser.username]);
+
+        res.render('pages/wishlist', { user: currentUser, location: req.session.location, reviews, wishlist, globalSearch });
+    } else {
+        res.redirect('/login');
+    }
+});
+
 // app.get('/discover', async (req, res) => {
 //     res.render('pages/home', { events: [], user: req.session.user });
 // });

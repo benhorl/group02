@@ -1,29 +1,40 @@
 <%- include ('../partials/head') %>
 <%- include ('../partials/menu') %>
 
+<style>
+    main{
+        color: #000000;
+    }
+    /* Add more styles as needed */
+</style>
+
 
 <main>
-  <div class="container" style="padding: 20px; font-family: Arial, sans-serif;">
-    <h1 style="color: #333; text-align: center;">Discover Events</h1>
+    <script src="/script.js"></script>
+    <div class="profile-margin">
+        <h3 style="padding-top: 1%;">Welcome, <%= user.username %></h3>
 
-    <a href="/posts/new" class="btn btn-success mb-4" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px;">Add New Post</a>
-
-    <div class="row">
-      <% events.forEach(event => { %>
-        <div class="col-md-4 mb-4" style="float: left; width: 33%; padding: 0 10px; box-sizing: border-box; margin-bottom: 20px;">
-          <div class="card" style="border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
-            <img src="<%= event.images[0].url || 'default-image-url' %>" class="card-img-top" alt="Event Image" style="width: 100%; height: auto;">
-            <div class="card-body" style="padding: 15px;">
-              <h5 class="card-title" style="margin-top: 0; color: #000;"><%= event.name %></h5>
-              <p class="card-text" style="color: #555;">Date and Time: <%= event.dates.start.dateTime %></p>
-              <a href="<%= event.url %>" class="btn btn-primary" style="background-color: blue; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Book Now</a>
-            </div>
-          </div>
+        
+    
+            <% if (wishlist && wishlist.length > 0) { %>
+                <div style="text-align: center; padding-bottom: 1%;">
+                  <p>Wishlist:</p>
+                  <% wishlist.forEach(wish => { %>
+                    <div class="wishlist-item">
+                      <ul class="list-group" style="width: 30%; margin: 0 auto; text-align: center; display: inline-block;">
+                        <li class="list-group-item">
+                          <p><strong></strong> <%= wish.restaurant %>, <%= wish.located %></p>
+                        </li>
+                      </ul>
+                      <button type="button" class="remove-button" data-username="<%= wish.username %>" data-restaurant="<%= encodeURIComponent(wish.restaurant) %>" data-located="<%= wish.located %>" data-alias="<%= wish.alias %>"
+                        style="color: red; border-color: red; background-color: transparent; border-radius: 10px; margin-left: 10px;">Remove</button>
+                    </div>
+                  <% }) %>
+                </div>        
+            <% } else { %> 
+                <p style="margin-top: 100px;">You have yet to add anything to your wishlist.</p>
+            <% } %>
         </div>
-      <% }) %>
-    </div>
-  </div>
 </main>
 
 <%- include ('../partials/footer') %>
-
