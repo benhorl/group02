@@ -43,24 +43,7 @@
                 <p>You have yet to review any restaurants.</p>
             <% } %>
     
-            <% if (wishlist && wishlist.length > 0) { %>
-                <div style="text-align: center; padding-bottom: 1%;">
-                  <p>Wishlist:</p>
-                  <% wishlist.forEach(wish => { %>
-                    <div class="wishlist-item">
-                      <ul class="list-group" style="width: 30%; margin: 0 auto; text-align: center; display: inline-block;">
-                        <li class="list-group-item">
-                          <p><strong></strong> <%= wish.restaurant %>, <%= wish.located %></p>
-                        </li>
-                      </ul>
-                      <button type="button" class="remove-button" data-username="<%= wish.username %>" data-restaurant="<%= encodeURIComponent(wish.restaurant) %>" data-located="<%= wish.located %>" data-alias="<%= wish.alias %>"
-                        style="color: red; border-color: red; background-color: transparent; border-radius: 10px; margin-left: 10px;">Remove</button>
-                    </div>
-                  <% }) %>
-                </div>        
-            <% } else { %> 
-                <p style="margin-top: 100px;">You have yet to add anything to your wishlist.</p>
-            <% } %>
+            
         </div>
 </main>
 
