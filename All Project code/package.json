@@ -3,24 +3,24 @@
     "main": "index.js",
     "dependencies": {
         "api": "^6.1.1",
-        "axios": "^1.1.3",
-        "bcrypt": "^5.1.0",
+        "axios": "^1.6.2",
+        "bcrypt": "^5.1.1",
         "body-parser": "1.20.0",
-        "ejs": "^3.1.8",
+        "ejs": "^3.1.9",
         "ejs-lint": "^2.0.0",
-        "express": "^4.6.1",
+        "express": "^4.18.2",
         "express-session": "1.17.3",
-        "pg-promise": "^10.11.1"
+        "pg-promise": "^10.15.4"
     },
     "devDependencies": {
-        "chai": "^4.2.0",
-        "chai-http": "^4.3.0",
+        "chai": "^4.3.10",
+        "chai-http": "^4.4.0",
         "mocha": "^10.2.0",
         "nodemon": "^3.0.2",
         "npm-run-all": "^4.1.5"
     },
     "scripts": {
-        "prestart": "npm install",
+        "prestart": "npm install -g npm@10.2.4",
         "start": "nodemon index.js",
         "dev": "nodemon server.js",
         "test": "mocha",
