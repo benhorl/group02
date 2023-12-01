@@ -6,31 +6,72 @@
         <div style="padding: 2% 2% 3% 2%; display: flex; justify-content: space-between;">
             <style>
                 #rrl {
-                  color: #00d0f5;
-                  white-space: nowrap; /*keeps text on one line*/
-                  overflow: hidden; /*hides any overflox*/
+                color: #00d0f5;
+                white-space: nowrap; /*keeps text on one line*/
+                overflow: hidden; /*hides any overflox*/
                 }
-              </style>
-              
-              <script>
-                window.onload = function adjustFontSize() {
-                    var resize = document.getElementById("rrl");
+            </style>
 
-                    var containerWidth = resize.offsetWidth; //width of container
-                    var textWidth = resize.scrollWidth; //width of text
-              
-                    if (textWidth > containerWidth) {
-                      var fontSize = parseInt(window.getComputedStyle(resize).fontSize); //computed style returns object of css info and we extract the fontSize
-                      resize.style.fontSize = fontSize - 1 + "px"; //lower it one px
-                      adjustFontSize(); // call recursively until it fits
+            <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var reviews = document.querySelectorAll('.card-text-review'); //go through all the cards review[i].content
+
+                reviews.forEach(function (review) {
+                    if (isOverflowed(review)) { //if the card reaches overflow
+                        createShowMoreButton(review); //create the button to show more
                     }
-                  };
-              </script>
-              
-              <h1 id="rrl">Reviews for <%= name %> located in <%= location %></h1>
-              
+                });
+            });
+
+            function isOverflowed(review) {
+                return review.scrollHeight > review.clientHeight; //if text height is bigger than container height
+            }
+
+            function createShowMoreButton(review) {
+                var buttonContainer = document.createElement('div'); // create a container for the button
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.justifyContent = 'center';
+
+                var showMore = document.createElement('button'); // create a button
+                showMore.innerText = 'Show More'; // have the button say show more
+
+                showMore.addEventListener('click', function () {
+                    var modalButton = document.getElementById('modalBtn'); // get the button that triggers the modal
+                    if (modalButton) {
+                        modalButton.click(); // activate modalButton when clicked
+                    }
+                });
+
+                showMore.classList.add('rBtn', 'rBtn-4', 'rSep', 'icon-list');
+                // append the button to the container
+                buttonContainer.appendChild(showMore);
+
+                // append the container after the card-text element
+                review.parentNode.appendChild(buttonContainer);
+            }
+
+
+
+            window.onload = function adjustFontSize() {
+                var resize = document.getElementById("rrl");
+
+                var containerWidth = resize.offsetWidth; //width of container
+                var textWidth = resize.scrollWidth; //width of text
+
+                if (textWidth > containerWidth) {
+                    var fontSize = parseInt(window.getComputedStyle(resize).fontSize); //computed style returns object of css info and we extract the fontSize
+                    resize.style.fontSize = fontSize - 1 + "px"; //lower it one px
+                    adjustFontSize(); // call recursively until it fits
+                }
+            };
+            </script>
+
+            <h1 class="h1Head" id="rrl">Reviews for <%= name %> located in <%= location %></h1>
+
             <a href="/posts/new" style="padding-left: 1%;"><button class="rBtn rBtn-1 rSep icon-pencil";">Add New Review</button></a>
-        </div>        
+        </div>
+
         <div class="row" style="padding-bottom: 1%; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));">
             <% for(let i = reviews.length-1; i >= 0; i--){ %>
                 <div class="card" style="width: 18rem; height: 20rem;">
@@ -53,7 +94,38 @@
                             <% } %>
                         <% } %>
                     </p>
-                    <p class="card-text" style="display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 9; max-height: 20em; text-overflow: ellipsis;"><%= reviews[i].content %>.</p>
+                    <p class="card-text-review" style="display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 7; max-height: 170px; text-overflow: ellipsis;"><%= reviews[i].content %>.</p>
+                    <button data-bs-toggle="modal" data-bs-target="#myModal" id="modalBtn" hidden>
+                    </button>
+
+                    </div>
+                </div>
+
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content" style="border: 1px solid black;">
+                            <div style="padding-top: 2%; display: flex; justify-content: space-between;">
+                                <h4 class="card-title" style="margin-left: 50px; padding-top: 50px;"><%= reviews[i].username %></h4>
+                                <a href="/profile/<%= reviews[i].username %>" id="userClick" class="card-link" style="margin-right: 50px; padding-top: 30px;">
+                                    <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 50px;"></i>
+                                </a>  
+                            </div>
+                            <p class="card-rating" id="userRating" style="margin-left: 50px;">
+                                <% yellow = reviews[i].rating %>
+                                <% gray = 5 - yellow %>
+                                <% for(j = 0; j < yellow; j++) { %>
+                                    <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
+                                <% } %>
+                                <% if(gray > 0) { %>
+                                    <% for(k = 0; k < gray; k++) { %>
+                                        <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                                    <% } %>
+                                <% } %>
+                            </p>
+                            <div class="modal-body" style="border-top: 1px solid rgb(212, 212, 212); max-height: 70vh;">
+                                <p class="card-text" id="userReview" ><%= reviews[i].content %>.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <% } %>
@@ -65,19 +137,19 @@
                             <h5 class="card-title"><%= yelp[i].user.name %></h5>
                             <img src="https://cdn-icons-png.flaticon.com/512/168/168812.png" alt="Yelp" style="height: 25px; width: 25px;">
                         </div>
-                    <p class="card-text">
-                        <% yellow = yelp[i].rating %>
-                        <% gray = 5 - yellow %>
-                        <% for(j = 0; j < yellow; j++) { %>
-                            <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
-                        <% } %>
-                        <% if(gray > 0) { %>
-                            <% for(k = 0; k < gray; k++) { %>
-                                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                        <p class="card-text">
+                            <% yellow = yelp[i].rating %>
+                            <% gray = 5 - yellow %>
+                            <% for(j = 0; j < yellow; j++) { %>
+                                <img src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-shiny-gold-star-clipart-illustration-design-png-image_8633179.png" alt="Yellow Star" width="20" height="20">
                             <% } %>
-                        <% } %>
-                    </p>
-                    <p class="card-text"><%= yelp[i].text %> %>.</p>
+                            <% if(gray > 0) { %>
+                                <% for(k = 0; k < gray; k++) { %>
+                                    <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="Gray Star" width="20" height="20">
+                                <% } %>
+                            <% } %>
+                            </p>
+                        <p class="card-text"><%= yelp[i].text %> %>.</p>
                     </div>
                 </div>
             <% } %>
