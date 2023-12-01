@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () { //event listener for
             const username = this.getAttribute('data-username'); //get this username
             const restaurant = this.getAttribute('data-restaurant'); //get this restaurant
             const located = this.getAttribute('data-located'); //get this location
-            const alias = this.getAttribute('data-alias');
+            const alias = this.getAttribute('data-alias'); //get this alias
 
             //send request using those attributes to delete from the database
             fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
