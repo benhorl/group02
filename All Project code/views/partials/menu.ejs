@@ -23,6 +23,11 @@
       text-shadow: -1px 1px 2px #fffdfd, 1px 4px 10px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
       white-space: nowrap;
     }
+    
+    #wishlistId {
+        color: #000000;
+        text-shadow: -1px 1px 2px #fffdfd, 1px 1px 1px #fbf8f8, 1px -1px 0 #ffffff, -1px -1px 0 #fcfcfc;
+      }
 
     .btnSetter > ul {
       display: flex;
@@ -55,6 +60,7 @@
         margin-top: 10px;
       }
 
+
       .btnSetter > ul {
         flex-direction: column;
         align-items: stretch;
@@ -81,7 +87,11 @@
   <ul>
     <li class="fixNav"><a href="/home" class="aId"><img src="/home.svg" style="margin-right: 2px; height: 18px;" alt="">Home</a></li>
     <li class="fixNav" style="margin-right: 20px;"><a href="/profile" class="aId"><img src="/user.svg" style="margin-right: 2px; height: 18px;" alt=""> Profile</a></li>
+    <li class="nav-item">
+            <a id="wishlistId" class="nav-link" href="/wishlist">Wishlist</a>
+        </li>
   </ul>
+  
 </div>
 
     <form action="/search" method="GET" id="reform" style=" background-color: white; height: 40px; border-radius: 5px;
