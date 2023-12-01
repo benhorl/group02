@@ -26,6 +26,7 @@ Pre-requisites:
 - Search Engine
 
 Run Intructions:
+
 1. Either download the respository and unzip the files, or clone the repository
     - The repository can be downloaded by clicking the green Code button and then pressing download zip
     - The repository can be cloned using the following command: ```git clone git@github.com:benhorl/group02.git```
@@ -38,5 +39,7 @@ Run Intructions:
 8. If you want to clear the databases of their stored information, run ```docker-compose down --volumes``` in your terminal
 
 How to run tests:
+
 All tests will be run automatically through mocha and chai when starting the application.
+
 Link:
