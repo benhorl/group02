@@ -45,8 +45,15 @@
   color: #007abc;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 body {
-  background: rgb(106, 185, 203);
+  background: rgb(59, 80, 121);
   font-family: "Ariel", sans-serif;
   display: flex;
   flex-direction: column;
@@ -91,6 +98,14 @@ h4 {
   position: absolute;
 }
 
+.toggle-button.checked:active{
+  top: 2px;
+}
+
+.toggle-button:not(.checked):active{
+  top: 2px;
+}
+
 .toggle-button.checked {
   background-color: rgb(0, 221, 0);
 }
@@ -111,6 +126,8 @@ h4 {
 }
 
 .footer{
+  background-color: rgb(255, 255, 255, 0.3);
+  border-radius: 5px;
   margin-top: auto;
   text-align: center;
   padding-top: 15px;
@@ -185,11 +202,11 @@ h4 {
 }
 
 .rBtn-2:hover {
-	background: rgb(0, 94, 218);
+	background: rgb(0, 81, 186);
 }
 
 .rBtn-2:active {
-	background: rgb(0, 94, 218);
+	background: rgb(0, 81, 186);
 	top: 2px;
 }
 
@@ -234,6 +251,36 @@ h4 {
 	width: 28%; /*size of shaded area*/
 }
 
+/**/
+.rBtn-4 { /* Size and color */
+  border-radius: 10px;
+  padding: 10px 10px 10px 45px;
+	background: rgb(230, 192, 1);
+	color: #fff;
+  font-size: 10px;
+}
+
+.rBtn-4:hover {
+	background: rgb(192, 160, 0);
+}
+
+.rBtn-4:active {
+	background: rgb(192, 160, 0);
+	top: 2px;
+}
+
+.rBtn-4:before { /*shaded area*/
+  border-radius: 10px;
+  background: rgba(0,0,0,0.15); /*creates shade*/
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	line-height: 2.4;
+	font-size: 15px; /* changes size of icon*/
+	width: 28%; /*size of shaded area*/
+}
+
 .icon-pencil:before {
 	content: "\f040";
 }
@@ -244,4 +291,31 @@ h4 {
 
 .icon-car:before{
   content: "\f041";
+}
+
+.icon-list:before{
+  content: "\f022"
+}
+
+.aId {
+  width: 80px;
+  border-radius: 10px;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 15px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin: 5px;
+} 
+
+.aId:hover {
+  width: 80px;
+  height: 35px;
+  color: white;
+  border-radius: 10px;
+  background-color: rgba(206, 206, 206, 0.1);
+
 }
