@@ -1,0 +1,43 @@
+Basic api functionality by @alsz5918 in #37
+correctly access api key from environmental variables by @alsz5918 in #38
+no excessive api calls by @alsz5918 in #39
+reformatting Milestone Submissions by @L3R0S in #40
+Merge pull request #40 from benhorl/levi_branch by @L3R0S in #41
+Levi branch by @L3R0S in #42
+changed review button by @benhorl in #44
+Working search api based on Boulder location by @alsz5918 in #43
+changed CSS for Login and Home pages added more to carosel by @jmohanty2 in #46
+search by keyword functioning & nodemon installed by @alsz5918 in #47
+reviews are now accessible from restaurant search by @alsz5918 in #48
+review database and review creation by @alsz5918 in #51
+BUG FIX: incomplete test case causing docker hang by @alsz5918 in #53
+created profile page by @alsz5918 in #54
+added wishlist by @alsz5918 in #57
+location selection by @alsz5918 in #56
+merge conflict resolution by @alsz5918 in #58
+type lol by @alsz5918 in #59
+fixed the wishlist not accepting apostrophes by @Gildhouse in #60
+Josephs branch by @alsz5918 in #62
+changed overall look of UI added more CSS styles via links by @jmohanty2 in #61
+CSS Bug Fixes by @jmohanty2 in #63
+text handling by @alsz5918 in #65
+Fixed Search Icon and carousel caption by @jmohanty2 in #66
+Added viewing other profiles. Added ways to view those profiles from … by @Gildhouse in #67
+changes to discover class by @benhorl in #68
+Added the Average Rating and the Address to the restaurants search page by @L3R0S in #70
+fixed logic for style on menu. Created new review button by @Gildhouse in #71
+Cards for search and reviews and some fancy buttons by @Gildhouse in #72
+visual distinction between our reviews and yelp reviews by @alsz5918 in #73
+visual distinction between our reviews and yelp reviews by @alsz5918 in #74
+Updated slide show by @alsz5918 in #75
+adding wishlist by @benhorl in #76
+notes by @benhorl in #77
+.env git ignore by @alsz5918 in #78
+Deleted DS_Code by @Gildhouse in #83
+moved wishlist by @benhorl in #84
+Fixed Slideshow bouncing by @jmohanty2 in #85
+better restaurant locations by @alsz5918 in #86
+fixed wishlist button by @Gildhouse in #87
+npm dependencies by @alsz5918 in #88
+npm changes by @alsz5918 in #89
+fix by @alsz5918 in #90
