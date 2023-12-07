@@ -68,7 +68,7 @@ window.onload = function adjustFontSize() {
                                     <% } %>
                             </h8>
                             <div style="padding-top: 5%; display: flex; justify-content: space-between;">
-                                <p class="card-text"><a target="_blank" href="https://www.google.com/maps/search/<%= search[i].name %>, <%= search[i].location.address1 %> <%= search[i].location.address2 %>, <%= search[i].location.city %>, <%= search[i].location.state %> <%= search[i].location.zip_code %>"><button class="rBtn rBtn-3 icon-car" 
+                                <p class="card-text"><a target="_blank" href='https://www.google.com/maps/search/<%= encodeURIComponent(search[i].name) %>, <%= encodeURIComponent(search[i].location.address1) %> <%= encodeURIComponent(search[i].location.address2) %>, <%= encodeURIComponent(search[i].location.city) %>, <%= encodeURIComponent(search[i].location.state)%> <%= encodeURIComponent(search[i].location.zip_code) %>'><button class="rBtn rBtn-3 icon-car" 
                                     type="button">Directions%></button></a>
                                 </p>
                                 <p class="card-text" style="float: right;"><a href=<%=link %>> <button class="rBtn rBtn-2 icon-star" 
