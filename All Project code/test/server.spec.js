@@ -27,7 +27,7 @@ describe('Server!', () => {
     chai
       .request(server)
       .post('/register')
-      .send({username: '123', password: '123'})
+      .send({username: '123', password: '123', preferences: 'None', state: 'Colorado', city: 'Aurora'})
       .redirects(0) //tests if the correct registration attempt correctly passes to the login page
       .end((err, res) => {
         expect(res).to.have.status(302);
@@ -40,7 +40,7 @@ describe('Server!', () => {
     chai
       .request(server)
       .post('/register')
-      .send({username: 'levi', password: 'hello'})
+      .send({username: 'levi', password: 'hello', preferences: 'None', state: 'Colorado', city: 'Aurora'})
       .redirects(0) //tests if the correct registration attempt correctly passes to the login page
       .end((err, res) => {
         expect(res).to.have.status(302);
@@ -53,7 +53,7 @@ describe('Server!', () => {
     chai
       .request(server)
       .post('/register')
-      .send({username: 'levi', password: 'hello'})
+      .send({username: 'levi', password: 'hello', preferences: 'None', state: 'Colorado', city: 'Aurora'})
       .redirects(0) //tests if the incorrect registration attempt correctly sends the user to reattempt registration
       .end((err, res) => {
         expect(res).to.have.status(302);
