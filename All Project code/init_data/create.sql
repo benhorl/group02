@@ -1,6 +1,9 @@
 CREATE TABLE users (
     username VARCHAR(50) PRIMARY KEY,
-    password CHAR(60) NOT NULL
+    password CHAR(60) NOT NULL,
+    preferences CHAR(100) NOT NULL,
+    state CHAR(60) NOT NULL,
+    city CHAR(60) NOT NULL
 );
 
 CREATE TABLE posts (

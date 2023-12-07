@@ -99,10 +99,11 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
     // Hash the password using bcrypt library
     const hash = await bcrypt.hash(req.body.password, 10);
+    const { username, password, preferences, state, city } = req.body;
 
-    const query = 'INSERT INTO users (username, password) VALUES ($1, $2)';
-    const values = [req.body.username.toLowerCase(), hash]; //makes sure usernames cannot be repeated
-
+    const query = 'INSERT INTO users (username, password, preferences, state, city) VALUES ($1, $2, $3, $4, $5)';
+    const values = [username.toLowerCase(), hash, preferences, state, city]; //makes sure usernames cannot be repeated
+    
     db.none(query, values)
         .then(() => { //success state
             console.log('User registered successfully');
