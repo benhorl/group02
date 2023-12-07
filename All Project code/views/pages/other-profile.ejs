@@ -6,6 +6,13 @@
     <div class="profile-margin">
         <h3 style="padding-top: 1%;">You are viewing the profile of <%= viewedUser.username %>.</h3>
 
+        <%   %>
+            <form action="<%= isFollowing ? '/unfollow' : '/follow' %>" method="post">
+                <input type="hidden" name="username" value="<%= viewedUser.username %>">
+                <button type="submit"><%= isFollowing ? 'Unfollow' : 'Follow' %></button>
+            </form>
+        <%  %>
+
         <% if (reviews && reviews.length > 0) { %>
             <p>The most recent reviews by  <%= viewedUser.username %>:</p>
             <div class="row">

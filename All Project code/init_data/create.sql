@@ -22,3 +22,11 @@ CREATE TABLE wishlist (
     alias VARCHAR,
     FOREIGN KEY (username) REFERENCES users(username)
 );
+
+CREATE TABLE followers (
+    follower_username VARCHAR(50),
+    following_username VARCHAR(50),
+    PRIMARY KEY (follower_username, following_username),
+    FOREIGN KEY (follower_username) REFERENCES users(username),
+    FOREIGN KEY (following_username) REFERENCES users(username)
+);

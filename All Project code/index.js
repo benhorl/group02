@@ -229,14 +229,30 @@ app.get('/profile/:Username?', async (req, res) => {
             // gets reviews written by logged in user
             const reviews = await db.any('SELECT * FROM posts WHERE username ILIKE $1', [currentUser.username]);
 
-            res.render('pages/profile', { user: currentUser, location: req.session.location, reviews, globalSearch });
+            res.render('pages/profile', { user: currentUser, location: req.session.location, reviews, globalSearch, followers, followings });
         } else if (viewedUser) {
-            // gets reviews for selected user
             const reviews = await db.any('SELECT * FROM posts WHERE username ILIKE $1', [viewedUsername]);
-            // gets wishlist for selected user
             const wishlist = await db.any('SELECT * FROM wishlist WHERE username ILIKE $1', [viewedUsername]);
 
-            res.render('pages/other-profile', { user: currentUser, viewedUser, location: req.session.location, globalSearch, reviews, wishlist });
+            // Check if the current user is already following the viewed user
+            let isFollowing = false;
+            if (currentUser) {
+                const followCheck = await db.oneOrNone('SELECT * FROM followers WHERE follower_username = $1 AND following_username = $2', [currentUser.username, viewedUsername]);
+                if (followCheck) {
+                    isFollowing = true;
+                }
+            }
+
+            res.render('pages/other-profile', { 
+                user: currentUser, 
+                viewedUser, 
+                location: req.session.location, 
+                globalSearch, 
+                reviews, 
+                wishlist,
+                isFollowing // Add this line to pass the 'isFollowing' status to the EJS template
+            });
+
         } else {
             res.status(404).send('User not found!');
         }
@@ -265,6 +281,27 @@ app.get('/wishlist/', async (req, res) => {
 
 
 });
+
+
+app.get('/following/', async (req, res) => {
+    if (req.session.user) {
+        const currentUser = req.session.user;
+
+        // Fetch the list of users the current user is following
+        const following = await db.any('SELECT following_username FROM followers WHERE follower_username = $1', [currentUser.username]);
+
+        res.render('pages/following', { // Note that this should point to a new EJS template for following
+            user: currentUser, 
+            location: req.session.location, 
+            following, // Pass the following list
+            globalSearch
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+
 
 // New review
 app.get('/posts/new/', (req, res) => {
@@ -342,6 +379,29 @@ app.delete('/wishlist/:username/:restaurant/:located/:alias', (req, res) => {
             console.error('Error:', error);
             res.status(500).send('Internal Server Error');
         });
+});
+
+app.post('/follow', async (req, res) => {
+    const follower = req.session.user.username; // The username of the logged-in user
+    const following = req.body.username; // The username of the user to follow
+
+    // SQL to insert a new follow relationship
+    const query = 'INSERT INTO followers (follower_username, following_username) VALUES ($1, $2)';
+    db.none(query, [follower, following])
+        .then(() => res.send('Followed successfully'))
+        .catch(error => res.status(500).send(error.toString()));
+});
+
+// Unfollow a user
+app.post('/unfollow', async (req, res) => {
+    const follower = req.session.user.username;
+    const following = req.body.username;
+
+    // SQL to delete a follow relationship
+    const query = 'DELETE FROM followers WHERE follower_username = $1 AND following_username = $2';
+    db.none(query, [follower, following])
+        .then(() => res.send('Unfollowed successfully'))
+        .catch(error => res.status(500).send(error.toString()));
 });
 
 // Logout
