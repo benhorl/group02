@@ -23,7 +23,7 @@ describe('Server!', () => {
       });
   });
 
-  it('positive : /register', done => {
+  it('dev', done => {
     chai
       .request(server)
       .post('/register')
@@ -57,7 +57,7 @@ describe('Server!', () => {
       .redirects(0) //tests if the incorrect registration attempt correctly sends the user to reattempt registration
       .end((err, res) => {
         expect(res).to.have.status(302);
-        expect(res.headers.location).to.equal('/register')
+        expect(res.headers.location).to.equal('/register');
         done();
       });
   });

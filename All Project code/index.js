@@ -391,7 +391,7 @@ app.delete('/wishlist/:username/:restaurant/:located/:alias', (req, res) => {
 
 app.post('/follow', async (req, res) => {
     const follower = req.session.user.username.toLowerCase(); // The username of the logged-in user
-    const following = following.toLowerCase(); // The username of the user to follow
+    const following = req.body.username.toLowerCase(); // The username of the user to follow
 
     // SQL to insert a new follow relationship
     const query = 'INSERT INTO followers (follower_username, following_username) VALUES ($1, $2)';
