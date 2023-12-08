@@ -202,6 +202,10 @@ app.get('/reviews/:id', async (req, res) => { // reviews for given website
         if (str[1] == businessID)
             msg = str[0]; // finds correct restaurant name to display on page
     }
+
+    if (msg == null)
+        res.redirect('/home');
+
     //https://docs.developer.yelp.com/reference/v3_business_reviews
     sdkR.v3_business_reviews({ limit: '5', sort_by: 'yelp_sort', business_id_or_alias: businessID })
         .then(results => {

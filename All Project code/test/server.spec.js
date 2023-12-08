@@ -87,8 +87,18 @@ describe('Server!', () => {
         done();
       });
     });
+  
+  it('neutral : /search', done => {
+    chai
+      .request(server)
+      .get('/search?k=Boulder&k=tacos')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
 
-  it('positive : /posts/add/:id', done => {
+  it('positive : /posts/add', done => {
     chai
       .request(server)
       .post('/posts/add')
@@ -100,7 +110,82 @@ describe('Server!', () => {
         done();
       });
   });
+  
+  it('positive : /reviews/:id', done => {
+    chai
+      .request(server)
+      .get('/reviews/t-aco-an-urban-taqueria-boulder')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
 
+  it('negative : /reviews/:id', done => {
+    chai
+      .request(server)
+      .get('/reviews/xyz')
+      .redirects(0) 
+      .end((err, res) => {
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/home')
+        done();
+      });
+  });
+
+  it('positive : /home', done => {
+    chai
+      .request(server)
+      .get('/home')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('self profile: /profile/:Username?', done => {
+    chai
+      .request(server)
+      .get('/profile')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('other profile : /profile/:Username?', done => {
+    chai
+      .request(server)
+      .get('/profile/123')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('positive : /wishlist', done => {
+    chai
+      .request(server)
+      .get('/wishlist')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('negative : /wishlist', done => {
+    chai
+      .request(server)
+      .get('/wishlist')
+      .redirects(0)
+      .end((err, res) => {
+        expect(res).to.have.status(302);
+        expect(res.headers.location).to.equal('/login')
+        done();
+      });
+  });
+
+  
  
   // ===========================================================================
   // TO-DO: Part A Login unit test case
