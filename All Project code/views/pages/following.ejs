@@ -1,0 +1,35 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/menu') %>
+
+<style>
+    main {
+        color: #000000;
+    }
+</style>
+
+<main>
+    <script src="/script.js"></script>
+    <div class="profile-margin">
+        <h3 style="padding-top: 1%;">People <%= user.username %> is Following</h3>
+
+        <% if (following && following.length > 0) { %>
+            <div style="text-align: center; padding-bottom: 1%;">
+                <% following.forEach(followedUser => { %>
+                    <div class="following-item">
+                        <ul class="list-group" style="width: 30%; margin: 0 auto; text-align: center; display: inline-block;">
+                            <li class="list-group-item">
+                                <p><%= followedUser.following_username %></p>
+                            </li>
+                        </ul>
+                        <button type="button" class="unfollow-button" data-username="<%= followedUser.following_username %>"
+                            style="color: blue; border-color: blue; background-color: transparent; border-radius: 10px; margin-left: 10px;">Unfollow</button>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %> 
+            <p style="margin-top: 100px;"><%= user.username %> is not following anyone yet.</p>
+        <% } %>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
