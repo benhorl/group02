@@ -27,9 +27,6 @@ CREATE TABLE wishlist (
 );
 
 CREATE TABLE followers (
-    follower_username VARCHAR(50),
-    following_username VARCHAR(50),
-    PRIMARY KEY (follower_username, following_username),
-    FOREIGN KEY (follower_username) REFERENCES users(username),
-    FOREIGN KEY (following_username) REFERENCES users(username)
+    follower_username VARCHAR,
+    following_username VARCHAR
 );

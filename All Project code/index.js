@@ -223,6 +223,8 @@ app.get('/reviews/:id', async (req, res) => { // reviews for given website
 // Profile
 app.get('/profile/:Username?', async (req, res) => {
     const currentUser = req.session.user; // logged in user
+    let followCheck;
+    let isFollowing;
 
     if (req.params.Username) {
         // selected username in URL
@@ -240,10 +242,12 @@ app.get('/profile/:Username?', async (req, res) => {
             const wishlist = await db.any('SELECT * FROM wishlist WHERE username ILIKE $1', [viewedUsername]);
 
             // Check if the current user is already following the viewed user
-            let isFollowing = false;
+            
             if (currentUser) {
-                const followCheck = await db.oneOrNone('SELECT * FROM followers WHERE follower_username = $1 AND following_username = $2', [currentUser.username, viewedUsername]);
-                if (followCheck) {
+                followCheck = await db.oneOrNone('SELECT * FROM followers WHERE follower_username = $1 AND following_username = $2', [currentUser.username, viewedUsername]);
+                if (!followCheck) {
+                    isFollowing = false;
+                } else {
                     isFollowing = true;
                 }
             }
@@ -293,7 +297,7 @@ app.get('/following/', async (req, res) => {
         const currentUser = req.session.user;
 
         // Fetch the list of users the current user is following
-        const following = await db.any('SELECT following_username FROM followers WHERE follower_username = $1', [currentUser.username]);
+        const following = await db.any('SELECT following_username FROM followers WHERE follower_username = $1', [currentUser.username.toLowerCase()]);
 
         res.render('pages/following', { // Note that this should point to a new EJS template for following
             user: currentUser, 
@@ -338,7 +342,6 @@ app.post("/posts/add/", (req, res) => {
 });
 
 //Remove post
-//TODO attach to reviews
 app.post("/posts/delete/:id", (req, res) => {
     const postId = req.params.id;
 
@@ -387,25 +390,41 @@ app.delete('/wishlist/:username/:restaurant/:located/:alias', (req, res) => {
 });
 
 app.post('/follow', async (req, res) => {
-    const follower = req.session.user.username; // The username of the logged-in user
-    const following = req.body.username; // The username of the user to follow
+    const username = req.body.username;
+
+    let follower = req.session.user.username.toLowerCase(); // The username of the logged-in user
+    let following = following.toLowerCase(); // The username of the user to follow
 
     // SQL to insert a new follow relationship
     const query = 'INSERT INTO followers (follower_username, following_username) VALUES ($1, $2)';
     db.none(query, [follower, following])
-        .then(() => res.send('Followed successfully'))
+        .then(() => {
+            app.locals.message = "Followed successfully";
+            app.locals.error = '';
+            res.redirect('/profile/' + following)
+        })
         .catch(error => res.status(500).send(error.toString()));
 });
 
 // Unfollow a user
 app.post('/unfollow', async (req, res) => {
-    const follower = req.session.user.username;
-    const following = req.body.username;
+    const follower = req.session.user.username.toLowerCase();
+    const following = req.body.username.toLowerCase();
+    const page = req.body.page;
 
     // SQL to delete a follow relationship
     const query = 'DELETE FROM followers WHERE follower_username = $1 AND following_username = $2';
     db.none(query, [follower, following])
-        .then(() => res.send('Unfollowed successfully'))
+    .then(() => {
+        app.locals.message = "Unfollowed successfully";
+        app.locals.error = 'danger';
+        if (page == "following")
+            res.redirect('/following');
+        else if (page == "profile")
+            res.redirect('/profile/' + following);
+        else
+            res.redirect('/profile');
+    })
         .catch(error => res.status(500).send(error.toString()));
 });
 

@@ -15,15 +15,18 @@
         <% if (following && following.length > 0) { %>
             <div style="text-align: center; padding-bottom: 1%;">
                 <% following.forEach(followedUser => { %>
-                    <div class="following-item">
-                        <ul class="list-group" style="width: 30%; margin: 0 auto; text-align: center; display: inline-block;">
-                            <li class="list-group-item">
-                                <p><%= followedUser.following_username %></p>
-                            </li>
-                        </ul>
-                        <button type="button" class="unfollow-button" data-username="<%= followedUser.following_username %>"
-                            style="color: blue; border-color: blue; background-color: transparent; border-radius: 10px; margin-left: 10px;">Unfollow</button>
-                    </div>
+                    <form class="following" action="/unfollow" method="post">
+                        <input type="hidden" class="form-control" id="username" name="username" required value="<%= followedUser.following_username %>">
+                        <input type="hidden" class="form-control" id="page" name="page" required value="<%= "following" %>">
+                        <div class="following-item">
+                            <ul class="list-group" style="width: 30%; margin: 0 auto; text-align: center; display: inline-block;">
+                                <li class="list-group-item">
+                                    <p><%= followedUser.following_username %></p>
+                                </li>
+                            </ul>
+                            <button type="submit" class="btn btn-danger" data-username="<%= followedUser.following_username %>">Unfollow</button>
+                        </div>
+                    </form>
                 <% }) %>
             </div>
         <% } else { %> 
