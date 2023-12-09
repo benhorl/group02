@@ -15,11 +15,13 @@
             <script>
 
             document.addEventListener('DOMContentLoaded', function () {
-                var reviews = document.querySelectorAll('.card-text-review'); //go through all the cards review[i].content
+                var reviewsArr = document.querySelectorAll('.card-text-review'); //go through all the cards review[i].content
 
-                reviews.forEach(function (review) {
+                var reviews = Array.from(reviewsArr).reverse(); //make Node list into array, reverse it
+
+                reviews.forEach(function (review, i) {
                     if (isOverflowed(review)) { //if the card reaches overflow
-                        createShowMoreButton(review); //create the button to show more
+                        createShowMoreButton(review, i); //create the button to show more
                     }
                 });
             });
@@ -28,7 +30,7 @@
                 return review.scrollHeight > review.clientHeight; //if text height is bigger than container height
             }
 
-            function createShowMoreButton(review) {
+            function createShowMoreButton(review, i) {
                 var buttonContainer = document.createElement('div'); // create a container for the button
                 buttonContainer.style.display = 'flex';
                 buttonContainer.style.justifyContent = 'center';
@@ -37,7 +39,7 @@
                 showMore.innerText = 'Show More'; // have the button say show more
 
                 showMore.addEventListener('click', function () {
-                    var modalButton = document.getElementById('modalBtn'); // get the button that triggers the modal
+                    var modalButton = document.getElementById('modalBtn'+i); // get the button that triggers the modal
                     if (modalButton) {
                         modalButton.click(); // activate modalButton when clicked
                     }
@@ -95,13 +97,13 @@
                         <% } %>
                     </p>
                     <p class="card-text-review" style="display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; -webkit-line-clamp: 7; max-height: 170px; text-overflow: ellipsis;"><%= reviews[i].content %>.</p>
-                    <button data-bs-toggle="modal" data-bs-target="#myModal" id="modalBtn" hidden>
+                    <button data-bs-toggle="modal" data-bs-target="#myModal<%= i%>" id="modalBtn<%= i%>" hidden>
                     </button>
 
                     </div>
                 </div>
 
-                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModal<%= i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content" style="border: 1px solid black;">
                             <div style="padding-top: 2%; display: flex; justify-content: space-between;">

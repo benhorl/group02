@@ -17,37 +17,38 @@ function toggleButton(event, username, located) {
     }
 }
 
-async function addToWishlist(username, restaurant, located, alias) {
-    try {
-        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
-            method: 'POST',
-        });
-
-        if (response.ok) {
+function addToWishlist(username, restaurant, located, alias) {
+    return fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, { //returns promise
+        method: 'POST',
+    })
+    .then(response => {
+        if (response.ok) { //if our promise is ok, meaning it is not already in the database
             console.log('Added to wishlist successfully');
         } else {
             console.error('Failed to add to wishlist');
         }
-    } catch (error) {
+    })
+    .catch(error => {
         console.error('Error:', error);
-    }
+    });
 }
 
 async function removeFromWishlist(username, restaurant, located, alias) {
-    try {
-        const response = await fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
+    return fetch(`/wishlist/${username}/${restaurant}/${located}/${alias}`, {
             method: 'DELETE',
+        })
+        .then(response => {
+            if(response.ok){
+                console.log('Removed from wishlist successfully');
+            } else {
+                console.error('Failed to add to wishlist');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
-
-        if (response.ok) {
-            console.log('Removed from wishlist successfully');
-        } else {
-            console.error('Failed to remove from wishlist');
-        }
-    } catch (error) {
-        console.error('Error:', error);
     }
-}
+
 
 document.addEventListener('DOMContentLoaded', function () { //event listener for remove buttons
     const removeButtons = document.querySelectorAll('.remove-button'); //store the remove buttons
